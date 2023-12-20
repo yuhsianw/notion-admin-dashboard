@@ -1,0 +1,22 @@
+{
+  "name": "notion-admin-dashboard",
+  "version": "1.0.0",
+  "description": "A demo application for Notion",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuhsianw/notion-admin-dashboard.git"
+  },
+  "keywords": [
+    "notion"
+  ],
+  "author": "Frank Wang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yuhsianw/notion-admin-dashboard/issues"
+  },
+  "homepage": "https://github.com/yuhsianw/notion-admin-dashboard#readme"
+}
