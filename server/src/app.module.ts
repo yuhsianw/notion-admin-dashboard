@@ -2,14 +2,14 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { DataSource } from 'typeorm';
 import { UsersModule } from './users/users.module';
-import { User } from './users/user.entity';
 import { WorkspacesModule } from './workspaces/workspaces.module';
-import { Workspace } from './workspaces/workspaces.entity';
 
 @Module({
   imports: [
+    /**
+     * Connect to the database with TypeORM.
+     */
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -17,10 +17,12 @@ import { Workspace } from './workspaces/workspaces.entity';
       username: 'admin_dashboard_user',
       password: 'password',
       database: 'admin_dashboard',
-      entities: [User, Workspace],
       synchronize: true,
-      // avoid manually importing entities and causing leaks
-      // https://docs.nestjs.com/techniques/database#auto-load-entities
+      /**
+       * This saves us from manually importing entities to root module which
+       * causes leaks.
+       *  @see: https://docs.nestjs.com/techniques/database#auto-load-entities
+       */
       autoLoadEntities: true,
     }),
     UsersModule,
@@ -30,5 +32,5 @@ import { Workspace } from './workspaces/workspaces.entity';
   providers: [AppService],
 })
 export class AppModule {
-  constructor(private dataSource: DataSource) {}
+  constructor() {}
 }
