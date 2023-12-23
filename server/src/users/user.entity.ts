@@ -1,7 +1,12 @@
-import { Workspace } from 'src/workspaces/workspaces.entity';
+import { Workspace } from '../workspaces/workspaces.entity';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
 
-// Database table model abstraction
+/**
+ * User entity is the abstraction of the database user table. A recommended
+ * practice is to decouple the two by creating an entity schema. Skipping that
+ * for simplicity.
+ * @see: https://docs.nestjs.com/techniques/database#separating-entity-definition
+ */
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
