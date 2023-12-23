@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Workspace } from 'src/workspaces/workspaces.entity';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
 
 // Database table model abstraction
 @Entity()
@@ -14,4 +15,7 @@ export class User {
 
   @Column()
   email: string;
+
+  @ManyToMany(() => Workspace, (workspace) => workspace.members)
+  workspaces: Workspace[];
 }

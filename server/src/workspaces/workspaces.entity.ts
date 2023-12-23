@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from 'src/users/user.entity';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Workspace {
@@ -11,8 +18,9 @@ export class Workspace {
   @Column()
   domain: string;
 
-  @Column()
-  members: number[];
+  @ManyToMany(() => User, (user) => user.workspaces)
+  @JoinTable()
+  members: User[];
 
   @Column({ default: false })
   samlEnabled: boolean;
