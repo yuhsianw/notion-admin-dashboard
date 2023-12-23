@@ -4,7 +4,9 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { UsersModule } from './users/users.module';
+import { User } from './users/user.entity';
 import { WorkspacesModule } from './workspaces/workspaces.module';
+import { Workspace } from './workspaces/workspaces.entity';
 
 @Module({
   imports: [
@@ -15,6 +17,7 @@ import { WorkspacesModule } from './workspaces/workspaces.module';
       username: 'admin_dashboard_user',
       password: 'password',
       database: 'admin_dashboard',
+      entities: [User, Workspace],
       synchronize: true,
       // avoid manually importing entities and causing leaks
       // https://docs.nestjs.com/techniques/database#auto-load-entities
