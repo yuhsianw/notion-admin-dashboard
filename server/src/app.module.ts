@@ -2,7 +2,9 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
+import { DataSource } from 'typeorm';
+import { UsersModule } from './users/users.module';
+import { WorkspacesModule } from './workspaces/workspaces.module';
 
 @Module({
   imports: [
@@ -13,11 +15,17 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       username: 'admin_dashboard_user',
       password: 'password',
       database: 'admin_dashboard',
-      entities: [],
       synchronize: true,
+      // avoid manually importing entities and causing leaks
+      // https://docs.nestjs.com/techniques/database#auto-load-entities
+      autoLoadEntities: true,
     }),
+    UsersModule,
+    WorkspacesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private dataSource: DataSource) {}
+}
