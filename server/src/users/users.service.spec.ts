@@ -87,26 +87,27 @@ describe('UsersService', () => {
         email: 'johnd@com',
         workspaces: [],
       };
-      jest.spyOn(repository, 'findOne').mockResolvedValue(user);
+      jest.spyOn(repository, 'findOneBy').mockResolvedValue(user);
 
       const result = await service.findOne(1);
 
-      expect(repository.findOne).toHaveBeenCalledWith({ id: 1 });
+      expect(repository.findOneBy).toHaveBeenCalledWith({ id: 1 });
       expect(result).toEqual(user);
     });
 
     it('should return null if user is not found', async () => {
-      jest.spyOn(repository, 'findOne').mockResolvedValue(null);
+      jest.spyOn(repository, 'findOneBy').mockResolvedValue(null);
 
       const result = await service.findOne(1);
 
-      expect(repository.findOne).toHaveBeenCalledWith({ id: 1 });
+      expect(repository.findOneBy).toHaveBeenCalledWith({ id: 1 });
       expect(result).toBeNull();
     });
   });
 
   describe('update', () => {
     it('should update a user', async () => {
+      const userId = 1;
       const user: User = {
         id: 1,
         firstName: 'John',
@@ -114,12 +115,21 @@ describe('UsersService', () => {
         email: 'johnd@com',
         workspaces: [],
       };
-      jest.spyOn(repository, 'save').mockResolvedValue(user);
+      const updatedUser: User = {
+        id: 1,
+        firstName: 'John',
+        lastName: 'Doe',
+        email: 'udpated@com',
+        workspaces: [],
+      };
+      jest.spyOn(repository, 'findOneBy').mockResolvedValue(user);
+      jest.spyOn(repository, 'save').mockResolvedValue(updatedUser);
 
-      const result = await service.update(user);
+      const result = await service.update(userId, user);
 
+      expect(repository.findOneBy).toHaveBeenCalledWith({ id: 1 });
       expect(repository.save).toHaveBeenCalledWith(user);
-      expect(result).toEqual(user);
+      expect(result).toEqual(updatedUser);
     });
   });
 

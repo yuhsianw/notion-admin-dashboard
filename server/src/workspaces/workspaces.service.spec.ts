@@ -80,20 +80,20 @@ describe('WorkspacesService', () => {
         members: [],
         samlEnabled: false,
       };
-      jest.spyOn(repository, 'findOne').mockResolvedValue(workspace);
+      jest.spyOn(repository, 'findOneBy').mockResolvedValue(workspace);
 
       const result = await service.findOne(1);
 
-      expect(repository.findOne).toHaveBeenCalledWith({ id: 1 });
+      expect(repository.findOneBy).toHaveBeenCalledWith({ id: 1 });
       expect(result).toEqual(workspace);
     });
 
     it('should return null if workspace is not found', async () => {
-      jest.spyOn(repository, 'findOne').mockResolvedValue(null);
+      jest.spyOn(repository, 'findOneBy').mockResolvedValue(null);
 
       const result = await service.findOne(1);
 
-      expect(repository.findOne).toHaveBeenCalledWith({ id: 1 });
+      expect(repository.findOneBy).toHaveBeenCalledWith({ id: 1 });
       expect(result).toBeNull();
     });
   });
