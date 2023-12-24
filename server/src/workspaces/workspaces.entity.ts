@@ -18,6 +18,10 @@ export class Workspace {
   @Column()
   domain: string;
 
+  /**
+   * A list of users that is a member of this workspace. JoinTable is added here
+   * since workspace is the owning side of the relationship.
+   */
   @ManyToMany(() => User, (user) => user.workspaces)
   @JoinTable()
   members: User[];

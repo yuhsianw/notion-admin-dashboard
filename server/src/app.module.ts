@@ -9,6 +9,7 @@ import { WorkspacesModule } from './workspaces/workspaces.module';
   imports: [
     /**
      * Connect to the database with TypeORM.
+     * @see: https://docs.nestjs.com/techniques/database#typeorm-integration
      */
     TypeOrmModule.forRoot({
       type: 'postgres',
