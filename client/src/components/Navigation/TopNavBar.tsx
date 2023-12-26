@@ -6,6 +6,7 @@ import {
   AppBarStyledComponent,
   LogoStyledComponent,
 } from '../StyledComponents';
+import ColorModeToggle from './ColorModeToggle';
 
 interface TopNavBarProps extends AppBarProps {
   open: boolean;
@@ -32,6 +33,7 @@ export default function TopNavBar({ open, setOpen }: TopNavBarProps) {
         <Typography variant="h6" noWrap component="div">
           Notion Admin Dashboard
         </Typography>
+        <ColorModeToggle />
       </Toolbar>
     </AppBarStyledComponent>
   );
