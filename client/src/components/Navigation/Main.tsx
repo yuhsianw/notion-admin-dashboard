@@ -19,11 +19,15 @@ export default function Main({ open, children }: PropsWithChildren<MainProps>) {
           align="center"
           sx={{ pt: 4 }}>
           {'Copyright © '}
-          <Link color="inherit" href="https://mui.com/">
-            Your Website
+          <Link
+            color="inherit"
+            href="https://github.com/yuhsianw/notion-admin-dashboard">
+            Frank Wang
           </Link>{' '}
           {new Date().getFullYear()}
-          {'.'}
+          {
+            '. All rights reserved. This is a demo site created for the Notion team.'
+          }
         </Typography>
       </MainStyledComponent>
     </>
