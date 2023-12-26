@@ -9,6 +9,7 @@ import {
   ListItemText,
   useTheme,
 } from '@mui/material';
+import { Link } from 'react-router-dom';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import GroupIcon from '@mui/icons-material/Group';
@@ -56,7 +57,7 @@ export default function SideNav({ open, setOpen }: SideNavProps) {
 
       <List>
         <ListItem key={'workspaces'} disablePadding>
-          <ListItemButton>
+          <ListItemButton component={Link} to={'/workspaces'}>
             <ListItemIcon>
               <WorkspacesIcon />
             </ListItemIcon>
@@ -64,7 +65,7 @@ export default function SideNav({ open, setOpen }: SideNavProps) {
           </ListItemButton>
         </ListItem>
         <ListItem key={'users'} disablePadding>
-          <ListItemButton>
+          <ListItemButton component={Link} to={'/users'}>
             <ListItemIcon>
               <GroupIcon />
             </ListItemIcon>
