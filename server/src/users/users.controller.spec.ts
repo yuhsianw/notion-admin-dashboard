@@ -38,7 +38,7 @@ describe('UsersController', () => {
         email: 'johndoe@example.com',
       };
       const createdUser = {
-        id: 1,
+        id: '1',
         firstName: 'John',
         lastName: 'Doe',
         email: 'johndoe@example.com',
@@ -58,14 +58,14 @@ describe('UsersController', () => {
     it('should return an array of users', async () => {
       const users = [
         {
-          id: 1,
+          id: '1',
           firstName: 'John',
           lastName: 'Doe',
           email: 'johndoe@example.com',
           workspaces: [],
         },
         {
-          id: 2,
+          id: '2',
           firstName: 'Jane',
           lastName: 'Doe',
           email: 'janedoe@example.com',
@@ -84,9 +84,9 @@ describe('UsersController', () => {
 
   describe('findOne', () => {
     it('should return a user by ID', async () => {
-      const userId = 1;
+      const userId = '1';
       const user = {
-        id: 1,
+        id: '1',
         firstName: 'John',
         lastName: 'Doe',
         email: 'johndoe@example.com',
@@ -104,14 +104,14 @@ describe('UsersController', () => {
 
   describe('update', () => {
     it('should update a user by ID', async () => {
-      const userId = 1;
+      const userId = '1';
       const updateUserDto: UpdateUserDto = {
         firstName: 'John',
         lastName: 'Doe',
         email: 'changed@example.com',
       };
       const updatedUser = {
-        id: 1,
+        id: '1',
         firstName: 'John',
         lastName: 'Doe',
         email: 'changed@example.com',
@@ -129,7 +129,7 @@ describe('UsersController', () => {
 
   describe('remove', () => {
     it('should delete a user by ID', async () => {
-      const userId = 1;
+      const userId = '1';
 
       await controller.remove(userId);
 

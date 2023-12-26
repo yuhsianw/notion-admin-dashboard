@@ -9,8 +9,8 @@ import {
 
 @Entity()
 export class Workspace {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   name: string;

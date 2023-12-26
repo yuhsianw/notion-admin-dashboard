@@ -40,7 +40,7 @@ export class UsersService {
    * @param id - The ID of the user.
    * @returns The user with the specified ID, or null if not found.
    */
-  findOne(id: number): Promise<User | null> {
+  findOne(id: string): Promise<User | null> {
     return this.usersRepository.findOneBy({ id });
   }
 
@@ -51,7 +51,7 @@ export class UsersService {
    * @returns The updated user.
    * @throws NotFoundException if the user is not found.
    */
-  async update(id: number, updateUserDto: UpdateUserDto) {
+  async update(id: string, updateUserDto: UpdateUserDto) {
     const user = await this.findOne(id);
     if (!user) throw new NotFoundException('User not found');
 
@@ -74,7 +74,7 @@ export class UsersService {
    * Remove a user by ID.
    * @param id - The ID of the user to remove.
    */
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     await this.usersRepository.delete(id);
   }
 }

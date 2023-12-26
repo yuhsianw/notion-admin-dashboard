@@ -29,7 +29,7 @@ describe('WorkspacesService', () => {
   describe('create', () => {
     it('should create a new workspace', async () => {
       const workspace: Workspace = {
-        id: 1,
+        id: '1',
         name: 'Test Workspace',
         domain: 'test',
         members: [],
@@ -48,14 +48,14 @@ describe('WorkspacesService', () => {
     it('should retrieve all workspaces', async () => {
       const workspaces: Workspace[] = [
         {
-          id: 1,
+          id: '1',
           name: 'Workspace 1',
           domain: 'workspace1',
           members: [],
           samlEnabled: false,
         },
         {
-          id: 2,
+          id: '2',
           name: 'Workspace 2',
           domain: 'workspace2',
           members: [],
@@ -74,7 +74,7 @@ describe('WorkspacesService', () => {
   describe('findOne', () => {
     it('should retrieve a workspace by its ID', async () => {
       const workspace: Workspace = {
-        id: 1,
+        id: '1',
         name: 'Test Workspace',
         domain: 'test',
         members: [],
@@ -101,7 +101,7 @@ describe('WorkspacesService', () => {
   describe('update', () => {
     it('should update a workspace', async () => {
       const workspace: Workspace = {
-        id: 1,
+        id: '1',
         name: 'Test Workspace',
         domain: 'test',
         members: [],
@@ -118,7 +118,7 @@ describe('WorkspacesService', () => {
 
   describe('remove', () => {
     it('should remove a workspace by its ID', async () => {
-      const id = 1;
+      const id = '1';
       jest.spyOn(repository, 'delete').mockResolvedValue(undefined);
 
       await service.remove(id);

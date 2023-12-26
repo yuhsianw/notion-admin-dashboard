@@ -32,7 +32,7 @@ export class WorkspacesService {
    * @param id - The ID of the workspace to retrieve.
    * @returns A promise that resolves to the retrieved workspace, or null if not found.
    */
-  findOne(id: number): Promise<Workspace | null> {
+  findOne(id: string): Promise<Workspace | null> {
     return this.workspacesRepository.findOneBy({ id });
   }
 
@@ -50,7 +50,7 @@ export class WorkspacesService {
    * @param id - The ID of the workspace to remove.
    * @returns A promise that resolves when the workspace is successfully removed.
    */
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     await this.workspacesRepository.delete(id);
   }
 }

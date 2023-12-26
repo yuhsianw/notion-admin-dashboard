@@ -36,7 +36,7 @@ describe('UsersService', () => {
   describe('create', () => {
     it('should create a new user', async () => {
       const user: User = {
-        id: 1,
+        id: '1',
         firstName: 'John',
         lastName: 'Doe',
         email: 'johnd@com',
@@ -55,14 +55,14 @@ describe('UsersService', () => {
     it('should find all users', async () => {
       const users: User[] = [
         {
-          id: 1,
+          id: '1',
           firstName: 'John',
           lastName: 'Doe',
           email: 'johnd@com',
           workspaces: [],
         },
         {
-          id: 2,
+          id: '2',
           firstName: 'Jane',
           lastName: 'Smith',
           email: 'janes@com',
@@ -81,7 +81,7 @@ describe('UsersService', () => {
   describe('findOne', () => {
     it('should find a user by id', async () => {
       const user: User = {
-        id: 1,
+        id: '1',
         firstName: 'John',
         lastName: 'Doe',
         email: 'johnd@com',
@@ -89,7 +89,7 @@ describe('UsersService', () => {
       };
       jest.spyOn(repository, 'findOneBy').mockResolvedValue(user);
 
-      const result = await service.findOne(1);
+      const result = await service.findOne('1');
 
       expect(repository.findOneBy).toHaveBeenCalledWith({ id: 1 });
       expect(result).toEqual(user);
@@ -98,7 +98,7 @@ describe('UsersService', () => {
     it('should return null if user is not found', async () => {
       jest.spyOn(repository, 'findOneBy').mockResolvedValue(null);
 
-      const result = await service.findOne(1);
+      const result = await service.findOne('1');
 
       expect(repository.findOneBy).toHaveBeenCalledWith({ id: 1 });
       expect(result).toBeNull();
@@ -107,16 +107,16 @@ describe('UsersService', () => {
 
   describe('update', () => {
     it('should update a user', async () => {
-      const userId = 1;
+      const userId = '1';
       const user: User = {
-        id: 1,
+        id: '1',
         firstName: 'John',
         lastName: 'Doe',
         email: 'johnd@com',
         workspaces: [],
       };
       const updatedUser: User = {
-        id: 1,
+        id: '1',
         firstName: 'John',
         lastName: 'Doe',
         email: 'udpated@com',
@@ -135,7 +135,7 @@ describe('UsersService', () => {
 
   describe('remove', () => {
     it('should remove a user', async () => {
-      const id = 1;
+      const id = '1';
       jest.spyOn(repository, 'delete').mockResolvedValue(undefined);
 
       await service.remove(id);
