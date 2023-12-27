@@ -25,9 +25,7 @@ export default function Main({ open, children }: PropsWithChildren<MainProps>) {
             Frank Wang
           </Link>{' '}
           {new Date().getFullYear()}
-          {
-            '. All rights reserved. This is a demo site created for the Notion team with ❤️.'
-          }
+          {'. This is a demo site created for the Notion team with ❤️.'}
         </Typography>
       </MainStyledComponent>
     </>
