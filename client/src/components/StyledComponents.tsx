@@ -7,7 +7,7 @@
  * @see: https://mui.com/material-ui/react-drawer/#persistent-drawer
  */
 import { AppBar, AppBarProps, styled } from '@mui/material';
-import { drawerWidth } from '../config/constants';
+import { DRAWER_WIDTH } from '../config/constants';
 
 export const DrawerHeaderStyledComponent = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -24,7 +24,7 @@ export const MainStyledComponent = styled('main', {
 }>(({ theme, open }) => ({
   flexGrow: 1,
   padding: theme.spacing(3),
-  marginLeft: `-${drawerWidth}px`,
+  marginLeft: `-${DRAWER_WIDTH}px`,
   transition: theme.transitions.create('margin', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -50,8 +50,8 @@ export const AppBarStyledComponent = styled(AppBar, {
     duration: theme.transitions.duration.leavingScreen,
   }),
   ...(open && {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: `${drawerWidth}px`,
+    width: `calc(100% - ${DRAWER_WIDTH}px)`,
+    marginLeft: `${DRAWER_WIDTH}px`,
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,

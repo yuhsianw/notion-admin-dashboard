@@ -16,7 +16,7 @@ import GroupIcon from '@mui/icons-material/Group';
 import WorkspacesIcon from '@mui/icons-material/Workspaces';
 import React from 'react';
 import DrawerHeader from './DrawerHeader';
-import { drawerWidth } from '../../config/constants';
+import { DRAWER_WIDTH } from '../../config/constants';
 
 interface SideNavProps {
   open: boolean;
@@ -33,10 +33,10 @@ export default function SideNav({ open, setOpen }: SideNavProps) {
   return (
     <Drawer
       sx={{
-        width: drawerWidth,
+        width: DRAWER_WIDTH,
         flexShrink: 0,
         '& .MuiDrawer-paper': {
-          width: drawerWidth,
+          width: DRAWER_WIDTH,
           boxSizing: 'border-box',
         },
       }}
