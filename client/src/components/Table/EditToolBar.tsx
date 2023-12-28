@@ -35,6 +35,14 @@ export default function EditToolbar({
 }: EditToolbarProps) {
   const handleClick = () => {
     /**
+     * IDs are generated both here and in the server, where the latter persists
+     * once synced. This hybrid approach has the following benefits:
+     * Server-Generated IDs:
+     * - Security: Prevents malicious users from tampering ID for manipulation.
+     * Client-Generated IDs:
+     * - Offline Usage: Allows users to create new rows while offline.
+     * - Performance: Can reduce server load.
+     *
      * `randomId` generates a GUID.
      * @see: https://github.com/mui/mui-x/blob/e5d35580b78f5b8bb97ebf0cab2a3775f015418a/packages/grid/x-data-grid-generator/src/services/random-generator.ts#L118
      */

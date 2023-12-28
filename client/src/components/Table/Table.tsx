@@ -4,6 +4,7 @@
  * TODO: Allow copy and paste https://mui.com/x/react-data-grid/clipboard/
  * TODO: Add status bar for last polling time https://mui.com/x/react-data-grid/components/#footer
  * TODO: Add loading overlay https://mui.com/x/react-data-grid/components/#footer
+ * TODO: Add reset button to trigger database migration to reset to default
  */
 import React, { useState } from 'react';
 import {
