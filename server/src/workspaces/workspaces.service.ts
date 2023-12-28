@@ -1,8 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Workspace } from './workspaces.entity';
 import { Repository } from 'typeorm';
+import { CreateWorkspaceDto } from './dto/create-workspace.dto';
+import { UpdateWorkspaceDto } from './dto/update-workspace.dto';
 
+/**
+ * Service class for managing workspaces in the database.
+ */
 @Injectable()
 export class WorkspacesService {
   constructor(
@@ -15,7 +20,7 @@ export class WorkspacesService {
    * @param workspace - The workspace object to be created.
    * @returns A promise that resolves to the created workspace.
    */
-  create(workspace: Workspace): Promise<Workspace> {
+  create(workspace: CreateWorkspaceDto): Promise<Workspace> {
     return this.workspacesRepository.save(workspace);
   }
 
@@ -37,11 +42,29 @@ export class WorkspacesService {
   }
 
   /**
-   * Updates a workspace.
-   * @param workspace - The workspace object to be updated.
+   * Updates a workspace by its ID.
+   * @param id - The ID of the workspace to update.
+   * @param updateWorkspaceDto - Object containing fields to update.
    * @returns A promise that resolves to the updated workspace.
+   * @throws NotFoundException if the workspace is not found.
    */
-  update(workspace: Workspace): Promise<Workspace> {
+  async update(
+    id: string,
+    updateWorkspaceDto: UpdateWorkspaceDto,
+  ): Promise<Workspace> {
+    const workspace = await this.findOne(id);
+    if (!workspace) throw new NotFoundException('Workspace not found');
+
+    if (updateWorkspaceDto.name !== undefined) {
+      workspace.name = updateWorkspaceDto.name;
+    }
+    if (updateWorkspaceDto.domain !== undefined) {
+      workspace.domain = updateWorkspaceDto.domain;
+    }
+    if (updateWorkspaceDto.samlEnabled !== undefined) {
+      workspace.samlEnabled = updateWorkspaceDto.samlEnabled;
+    }
+
     return this.workspacesRepository.save(workspace);
   }
 
