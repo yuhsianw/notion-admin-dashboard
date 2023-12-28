@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { BASE_URL } from '../config/constants';
-import { GetUserDto } from '../dtos/get-user.dto';
-import { CreateUserDto } from '../dtos/create-user.dto';
-import { UpdateUserDto } from '../dtos/update-user.dto';
+import { GetUserDto } from '../dto/get-user.dto';
+import { CreateUserDto } from '../dto/create-user.dto';
+import { UpdateUserDto } from '../dto/update-user.dto';
 
 const API_URL = `${BASE_URL}/users/`;
 

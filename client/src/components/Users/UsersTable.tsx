@@ -7,7 +7,7 @@ import {
   updateUser,
 } from '../../services/userService';
 import Table from '../Table/Table';
-import { GetUserDto } from '../../dtos/get-user.dto';
+import { GetUserDto } from '../../dto/get-user.dto';
 import { POLLING_INTERVAL } from '../../config/constants';
 
 interface UserGridRow {

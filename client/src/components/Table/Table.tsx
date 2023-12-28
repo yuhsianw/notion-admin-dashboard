@@ -24,7 +24,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Box } from '@mui/material';
 import EditToolbar from './EditToolBar';
-import { GetUserDto } from '../../dtos/get-user.dto';
+import { GetUserDto } from '../../dto/get-user.dto';
 
 interface TableProps {
   rows: GridRowsProp;
