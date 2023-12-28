@@ -21,13 +21,25 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Box } from '@mui/material';
 import EditToolbar from './EditToolBar';
+import { GetUserDto } from '../../dtos/get-user.dto';
+
 interface TableProps {
   rows: GridRowsProp;
   setRows: (rows: GridRowsProp) => void;
   columns: GridColDef[];
+  saveRow: (row: GridRowModel) => Promise<GetUserDto | null>;
+  updateRow: (id: string, row: GridRowModel) => Promise<GetUserDto | null>;
+  deleteRow: (id: string) => void;
 }
 
-export default function Table({ rows, setRows, columns }: TableProps) {
+export default function Table({
+  rows,
+  setRows,
+  columns,
+  saveRow,
+  updateRow,
+  deleteRow,
+}: TableProps) {
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
 
   const handleRowEditStop: GridEventListener<'rowEditStop'> = (
@@ -44,13 +56,18 @@ export default function Table({ rows, setRows, columns }: TableProps) {
   };
 
   const handleSaveClick = (id: GridRowId) => () => {
-    // TODO: save to database
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
   };
 
-  const handleDeleteClick = (id: GridRowId) => () => {
-    // TODO: delete from database
-    setRows(rows.filter((row) => row.id !== id));
+  const handleDeleteClick = (id: GridRowId) => async () => {
+    try {
+      // QUESTION: Should we use `id.toString()` or change id type to `string`?
+      await deleteRow(id.toString());
+      setRows(rows.filter((row) => row.id !== id));
+    } catch (error) {
+      console.log('error', error);
+      // TODO: https://mui.com/material-ui/react-alert/
+    }
   };
 
   const handleCancelClick = (id: GridRowId) => () => {
@@ -65,12 +82,38 @@ export default function Table({ rows, setRows, columns }: TableProps) {
     }
   };
 
-  const processRowUpdate = (newRow: GridRowModel) => {
-    const updatedRow = { ...newRow, isNew: false };
-    setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
-    return updatedRow;
+  const updateToServer = async (id: GridRowId, newRow: GridRowModel) => {
+    if (newRow!.isNew) {
+      await saveRow(newRow!);
+    } else {
+      await updateRow(id.toString(), newRow!);
+    }
   };
 
+  const processRowUpdate = async (newRow: GridRowModel) => {
+    console.log('newRow', newRow);
+    try {
+      await updateToServer(newRow.id, newRow);
+      const updatedRow = { ...newRow, isNew: false };
+      setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+      return updatedRow;
+    } catch (error) {
+      console.log('error', error);
+
+      // TODO:  https://mui.com/material-ui/react-alert/
+
+      // BUG:  Not taking effect
+      setRowModesModel({
+        ...rowModesModel,
+        [newRow.id]: { mode: GridRowModes.Edit },
+      });
+
+      // Retain isNew flag
+      return newRow;
+    }
+  };
+
+  // BUG:  This is not fired at all.
   const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {
     setRowModesModel(newRowModesModel);
   };
