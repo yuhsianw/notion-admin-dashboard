@@ -11,7 +11,7 @@ export const getAllUsers = async (): Promise<GetUserDto[]> => {
   return response.data;
 };
 
-export const getUserById = async (id: string): Promise<GetUserDto[]> => {
+export const getUserById = async (id: string): Promise<GetUserDto> => {
   const response = await axios.get(`${API_URL}${id}`);
   return response.data;
 };
@@ -33,7 +33,7 @@ export const updateUser = async (
   return response.data;
 };
 
-export const deleteUser = async (id: string): Promise<GetUserDto | null> => {
+export const deleteUser = async (id: string): Promise<null> => {
   return axios.delete(`${API_URL}${id}`);
 };
 
