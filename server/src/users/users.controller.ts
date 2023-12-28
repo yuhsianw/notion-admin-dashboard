@@ -21,7 +21,8 @@ export class UsersController {
   /**
    * Create a new user.
    * @param createUserDto - The data for creating a user.
-   * @returns The created user.
+   * @returns A promise that resolves to the created user.
+   * TODO: add error handling
    */
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
@@ -30,7 +31,7 @@ export class UsersController {
 
   /**
    * Get all users.
-   * @returns An array of users.
+   * @returns A promise that resolves to an array of users.
    */
   @Get()
   async findAll() {
@@ -40,7 +41,7 @@ export class UsersController {
   /**
    * Get a user by ID.
    * @param id - The ID of the user.
-   * @returns The user with the specified ID.
+   * @returns A promise that resolves to the user with the specified ID.
    */
   @Get(':id')
   async findOne(@Param('id') id: string) {
@@ -51,7 +52,7 @@ export class UsersController {
    * Update a user by ID.
    * @param id - The ID of the user.
    * @param updateUserDto - The data for updating the user.
-   * @returns The updated user.
+   * @returns A promise that resolves to the updated user.
    */
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
@@ -61,7 +62,7 @@ export class UsersController {
   /**
    * Delete a user by ID.
    * @param id - The ID of the user.
-   * @returns The deleted user.
+   * @returns A promise that resolves to void.
    */
   @Delete(':id')
   async remove(@Param('id') id: string) {
