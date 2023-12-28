@@ -1,6 +1,9 @@
 /**
  * A Table component that supports CRUD operations.
  * @see: https://mui.com/x/react-data-grid/editing/#full-featured-crud
+ * TODO: Allow copy and paste https://mui.com/x/react-data-grid/clipboard/
+ * TODO: Add status bar for last polling time https://mui.com/x/react-data-grid/components/#footer
+ * TODO: Add loading overlay https://mui.com/x/react-data-grid/components/#footer
  */
 import React, { useState } from 'react';
 import {
@@ -100,9 +103,9 @@ export default function Table({
     } catch (error) {
       console.log('error', error);
 
-      // TODO:  https://mui.com/material-ui/react-alert/
+      // TODO: https://mui.com/material-ui/react-alert/
 
-      // BUG:  Not taking effect
+      // BUG: Not taking effect
       setRowModesModel({
         ...rowModesModel,
         [newRow.id]: { mode: GridRowModes.Edit },
@@ -113,11 +116,12 @@ export default function Table({
     }
   };
 
-  // BUG:  This is not fired at all.
+  // BUG: This is not fired at all.
   const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {
     setRowModesModel(newRowModesModel);
   };
 
+  // TODO: add tooltips
   const TableActions = ({ id }: { id: GridRowId }) => {
     const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
 

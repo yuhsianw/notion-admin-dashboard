@@ -1,3 +1,6 @@
+/**
+ * TODO:  Add mini drawer when closed https://mui.com/material-ui/react-drawer/#mini-variant-drawer
+ */
 import {
   Drawer,
   IconButton,

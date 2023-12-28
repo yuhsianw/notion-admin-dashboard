@@ -26,6 +26,12 @@ export default function UserTable() {
    */
   const rowsRef = useRef(rows);
 
+  /**
+   * TODO:  Add column validation https://mui.com/x/react-data-grid/filtering/quick-filter/#custom-filtering-logic
+   * TODO:  Add avatar column
+   * - https://mui.com/x/react-data-grid/components/#footer
+   * - https://github.com/mui/mui-x/blob/a769a9164c233116a7186e4e65d56d83003c0b6f/packages/grid/x-data-grid-generator/src/columns/employees.columns.tsx#L38C1-L38C1
+   */
   const columns: GridColDef[] = [
     {
       field: 'firstName',
@@ -34,12 +40,22 @@ export default function UserTable() {
       editable: true,
     },
     { field: 'lastName', headerName: 'Last Name', width: 180, editable: true },
+    /**
+     * TODO:  Update email colDef https://github.com/mui/mui-x/blob/a769a9164c233116a7186e4e65d56d83003c0b6f/packages/grid/x-data-grid-generator/src/columns/employees.columns.tsx#L84C4-L84C4
+     */
     {
       field: 'email',
       headerName: 'Email',
       width: 220,
       editable: true,
     },
+    /**
+     * TODO:  Multiple select for workspaces
+     * @see: single select example
+     * - https://mui.com/x/react-data-grid/filtering/quick-filter/#custom-filtering-logic
+     * - https://github.com/mui/mui-x/blob/a769a9164c233116a7186e4e65d56d83003c0b6f/packages/grid/x-data-grid-generator/src/columns/employees.columns.tsx#L112C4-L112C4
+     * @see: multiple select example https://mui.com/material-ui/react-select/#chip
+     */
     {
       field: 'workspaces',
       headerName: 'Workspaces',

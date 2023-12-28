@@ -1,6 +1,12 @@
 /**
  * A custom toolbar used by the `Table` component to create new rows.
  * @see: https://mui.com/x/react-data-grid/editing/#full-featured-crud
+ * TODO:  Add columns button https://mui.com/x/react-data-grid/column-visibility/
+ * TODO:  Add export button https://mui.com/x/react-data-grid/export/
+ * TODO:  Add batch control https://mui.com/x/react-data-grid/row-selection/
+ * TODO:  Add custom views https://mui.com/x/react-data-grid/state/#restore-the-state-with-apiref
+ * TODO:  Add quick filter https://mui.com/x/react-data-grid/filtering/quick-filter/
+ * 
  */
 import { Button } from '@mui/material';
 import {
@@ -33,10 +39,12 @@ export default function EditToolbar({
      * @see: https://github.com/mui/mui-x/blob/e5d35580b78f5b8bb97ebf0cab2a3775f015418a/packages/grid/x-data-grid-generator/src/services/random-generator.ts#L118
      */
     const id = randomId();
-    setRows((oldRows) => [...oldRows, { id, isNew: true }]);
+    setRows((oldRows) => [
+      ...oldRows,
+      // { id, isNew: true },
+      { id, firstName: 'GG', lastName: 'GG', email: 'gg@com', isNew: true },
+    ]);
     setRowModesModel((oldModel) => {
-      console.log('oldModel: ', oldModel);
-
       return {
         ...oldModel,
         [id]: { mode: GridRowModes.Edit },
