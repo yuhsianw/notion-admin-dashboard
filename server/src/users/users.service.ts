@@ -5,10 +5,10 @@ import { User } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
-@Injectable()
 /**
  * Service class for managing users in the database.
  */
+@Injectable()
 export class UsersService {
   constructor(
     /**
@@ -47,7 +47,7 @@ export class UsersService {
   /**
    * Update a user by ID.
    * @param id - The ID of the user.
-   * @param updateUserDto - The updated user data.
+   * @param updateUserDto - Object containing fields to update.
    * @returns The updated user.
    * @throws NotFoundException if the user is not found.
    */
@@ -73,6 +73,7 @@ export class UsersService {
   /**
    * Remove a user by ID.
    * @param id - The ID of the user to remove.
+   * @returns A promise that resolves when the user is removed.
    */
   async remove(id: string): Promise<void> {
     await this.usersRepository.delete(id);

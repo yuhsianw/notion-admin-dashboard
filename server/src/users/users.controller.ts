@@ -13,6 +13,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 
 /**
  * Controller for managing user operations.
+ * TODO: Return the correct error code
  */
 @Controller('users')
 export class UsersController {
@@ -22,7 +23,6 @@ export class UsersController {
    * Create a new user.
    * @param createUserDto - The data for creating a user.
    * @returns A promise that resolves to the created user.
-   * TODO: add error handling
    */
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
