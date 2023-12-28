@@ -26,13 +26,17 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Box } from '@mui/material';
 import EditToolbar from './EditToolBar';
 import { GetUserDto } from '../../dto/get-user.dto';
+import GetWorkspaceDto from '../../dto/get-workspace.dto';
 
 interface TableProps {
   rows: GridRowsProp;
   setRows: (rows: GridRowsProp) => void;
   columns: GridColDef[];
-  saveRow: (row: GridRowModel) => Promise<GetUserDto | null>;
-  updateRow: (id: string, row: GridRowModel) => Promise<GetUserDto | null>;
+  saveRow: (row: GridRowModel) => Promise<GetUserDto | GetWorkspaceDto | null>;
+  updateRow: (
+    id: string,
+    row: GridRowModel,
+  ) => Promise<GetUserDto | GetWorkspaceDto | null>;
   deleteRow: (id: string) => void;
 }
 
