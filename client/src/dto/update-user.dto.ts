@@ -1,7 +1,6 @@
 /**
- * Copied from the server side.
- * server/src/users/dto/update-user.dto.ts
- */
+ * Should match server side dto at `server/src/users/dto`.
+ */ 
 export interface UpdateUserDto {
   firstName?: string;
 

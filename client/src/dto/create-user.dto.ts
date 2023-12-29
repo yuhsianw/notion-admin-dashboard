@@ -1,6 +1,5 @@
 /**
- * Copied from the server side.
- * server/src/users/dto/create-user.dto.ts
+ * Should match server side dto at `server/src/users/dto`.
  */
 export interface CreateUserDto {
   firstName: string;
@@ -8,4 +7,6 @@ export interface CreateUserDto {
   lastName: string;
 
   email: string;
+
+  workspaces?: string[];
 }

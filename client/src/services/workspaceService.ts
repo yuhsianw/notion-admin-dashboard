@@ -1,5 +1,7 @@
 import axios from 'axios';
 import GetWorkspaceDto from '../dto/get-workspace.dto';
+import CreateWorkspaceDto from '../dto/create-workspace.dto';
+import UpdateWorkspaceDto from '../dto/update-workspace.dto';
 import { BASE_URL } from '../config/constants';
 
 const API_URL = `${BASE_URL}/workspaces/`;
@@ -19,7 +21,7 @@ export const getWorkspaceById = async (
 export const createWorkspace = async (
   data: any,
 ): Promise<GetWorkspaceDto | null> => {
-  const workspace = {
+  const workspace: CreateWorkspaceDto = {
     name: data.name,
     domain: data.domain,
     samlEnabled: data.samlEnabled,
@@ -29,7 +31,7 @@ export const createWorkspace = async (
 
 export const updateWorkspace = async (
   id: string,
-  workspace: any,
+  workspace: UpdateWorkspaceDto,
 ): Promise<GetWorkspaceDto> => {
   const response = await axios.patch(`${API_URL}${id}`, workspace);
   return response.data;
