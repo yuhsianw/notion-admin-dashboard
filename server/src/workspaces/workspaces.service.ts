@@ -4,6 +4,12 @@ import { Workspace } from './workspaces.entity';
 import { Repository } from 'typeorm';
 import { CreateWorkspaceDto } from './dto/create-workspace.dto';
 import { UpdateWorkspaceDto } from './dto/update-workspace.dto';
+import { UserWorkspaceService } from 'src/user-workspace/user-workspace.service';
+
+interface MemberChangeLists {
+  addedMemberIds: string[];
+  removedMemberIds: string[];
+}
 
 /**
  * Service class for managing workspaces in the database.
@@ -13,15 +19,75 @@ export class WorkspacesService {
   constructor(
     @InjectRepository(Workspace)
     private workspacesRepository: Repository<Workspace>,
+
+    private userWorkspaceService: UserWorkspaceService,
   ) {}
 
   /**
+   * Returns the list of members that were added and removed.
+   * @param oldMemberIds the old list of member IDs
+   * @param newMemberIds the new list of member IDs
+   * @returns
+   */
+  private getMemberChangeLists(
+    oldMemberIds: string[],
+    newMemberIds: string[],
+  ): MemberChangeLists {
+    const removedSet = new Set(oldMemberIds);
+    const addedSet = new Set<string>();
+    newMemberIds.forEach((id) => {
+      if (removedSet.has(id)) {
+        removedSet.delete(id);
+      } else {
+        addedSet.add(id);
+      }
+    });
+    return {
+      addedMemberIds: Array.from(addedSet),
+      removedMemberIds: Array.from(removedSet),
+    };
+  }
+
+  /**
+   * Update workspace memberships.
+   * @param workspaceId the ID of workspace to update.
+   * @param newMemberIds the new list of member IDs.
+   */
+  private async updateMemberships(
+    workspaceId: string,
+    newMemberIds: string[],
+  ): Promise<void> {
+    const oldMemberIds = (
+      await this.userWorkspaceService.findMembershipsByWorkspaceId(workspaceId)
+    ).map((membership) => membership.userId);
+
+    const changeLists = this.getMemberChangeLists(oldMemberIds, newMemberIds);
+    await this.userWorkspaceService.createMembershipsWithUserIds(
+      workspaceId,
+      changeLists.addedMemberIds,
+    );
+    await this.userWorkspaceService.removeMembershipsWithUserIds(
+      workspaceId,
+      changeLists.removedMemberIds,
+    );
+  }
+
+  /**
    * Creates a new workspace.
-   * @param workspace - The workspace object to be created.
+   * @param workspaceDto - The workspace object to be created.
    * @returns A promise that resolves to the created workspace.
    */
-  create(workspace: CreateWorkspaceDto): Promise<Workspace> {
-    return this.workspacesRepository.save(workspace);
+  async create(workspaceDto: CreateWorkspaceDto): Promise<Workspace> {
+    /**
+     * Create the workspace then assign members.
+     */
+    const newWorkspace = await this.workspacesRepository.save(
+      Object.assign(new Workspace(), workspaceDto),
+    );
+    if (workspaceDto.members !== undefined) {
+      await this.updateMemberships(newWorkspace.id, workspaceDto.members);
+    }
+    return newWorkspace;
   }
 
   /**
@@ -63,6 +129,9 @@ export class WorkspacesService {
     }
     if (updateWorkspaceDto.samlEnabled !== undefined) {
       workspace.samlEnabled = updateWorkspaceDto.samlEnabled;
+    }
+    if (updateWorkspaceDto.members !== undefined) {
+      await this.updateMemberships(workspace.id, updateWorkspaceDto.members);
     }
 
     return this.workspacesRepository.save(workspace);

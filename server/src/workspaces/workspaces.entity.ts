@@ -1,9 +1,9 @@
-import { User } from '../users/user.entity';
+import { UserWorkspace } from 'src/user-workspace/user-workspace.entity';
 import {
   Column,
   Entity,
-  JoinTable,
-  ManyToMany,
+  JoinColumn,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -18,14 +18,15 @@ export class Workspace {
   @Column()
   domain: string;
 
-  /**
-   * A list of users that is a member of this workspace. JoinTable is added here
-   * since workspace is the owning side of the relationship.
-   */
-  @ManyToMany(() => User, (user) => user.workspaces)
-  @JoinTable()
-  members: User[];
-
   @Column({ default: false })
   samlEnabled: boolean;
+
+  /**
+   * One workspace can have many members.
+   * @see: https://typeorm.io/relations
+   * @see: https://typeorm.io/faq#what-does-owner-side-in-a-relations-mean-or-why-we-need-to-use-joincolumn-and-jointable
+   */
+  @OneToMany(() => UserWorkspace, (UserWorkspace) => UserWorkspace.workspace)
+  @JoinColumn({ referencedColumnName: 'user' })
+  memberships: UserWorkspace[];
 }

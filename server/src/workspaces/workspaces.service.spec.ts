@@ -3,6 +3,9 @@ import { WorkspacesService } from './workspaces.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Workspace } from './workspaces.entity';
 import { Repository } from 'typeorm';
+import { CreateWorkspaceDto } from './dto/create-workspace.dto';
+import { UserWorkspaceModule } from '../user-workspace/user-workspace.module';
+import { UpdateWorkspaceDto } from './dto/update-workspace.dto';
 
 describe('WorkspacesService', () => {
   let service: WorkspacesService;
@@ -10,6 +13,7 @@ describe('WorkspacesService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [UserWorkspaceModule],
       providers: [
         WorkspacesService,
         { provide: getRepositoryToken(Workspace), useClass: Repository },
@@ -28,16 +32,22 @@ describe('WorkspacesService', () => {
 
   describe('create', () => {
     it('should create a new workspace', async () => {
+      const workspaceDto: CreateWorkspaceDto = {
+        name: 'Test Workspace',
+        domain: 'test',
+        samlEnabled: false,
+        members: [],
+      };
       const workspace: Workspace = {
         id: '1',
         name: 'Test Workspace',
         domain: 'test',
-        members: [],
+        memberships: [],
         samlEnabled: false,
       };
       jest.spyOn(repository, 'save').mockResolvedValue(workspace);
 
-      const result = await service.create(workspace);
+      const result = await service.create(workspaceDto);
 
       expect(repository.save).toHaveBeenCalledWith(workspace);
       expect(result).toEqual(workspace);
@@ -51,14 +61,14 @@ describe('WorkspacesService', () => {
           id: '1',
           name: 'Workspace 1',
           domain: 'workspace1',
-          members: [],
+          memberships: [],
           samlEnabled: false,
         },
         {
           id: '2',
           name: 'Workspace 2',
           domain: 'workspace2',
-          members: [],
+          memberships: [],
           samlEnabled: true,
         },
       ];
@@ -77,39 +87,45 @@ describe('WorkspacesService', () => {
         id: '1',
         name: 'Test Workspace',
         domain: 'test',
-        members: [],
+        memberships: [],
         samlEnabled: false,
       };
       jest.spyOn(repository, 'findOneBy').mockResolvedValue(workspace);
 
-      const result = await service.findOne(1);
+      const result = await service.findOne('1');
 
-      expect(repository.findOneBy).toHaveBeenCalledWith({ id: 1 });
+      expect(repository.findOneBy).toHaveBeenCalledWith({ id: '1' });
       expect(result).toEqual(workspace);
     });
 
     it('should return null if workspace is not found', async () => {
       jest.spyOn(repository, 'findOneBy').mockResolvedValue(null);
 
-      const result = await service.findOne(1);
+      const result = await service.findOne('1');
 
-      expect(repository.findOneBy).toHaveBeenCalledWith({ id: 1 });
+      expect(repository.findOneBy).toHaveBeenCalledWith({ id: '1' });
       expect(result).toBeNull();
     });
   });
 
   describe('update', () => {
     it('should update a workspace', async () => {
+      const workspaceDto: UpdateWorkspaceDto = {
+        name: 'Test Workspace',
+        domain: 'test',
+        samlEnabled: false,
+        members: [],
+      };
       const workspace: Workspace = {
         id: '1',
         name: 'Test Workspace',
         domain: 'test',
-        members: [],
+        memberships: [],
         samlEnabled: false,
       };
       jest.spyOn(repository, 'save').mockResolvedValue(workspace);
 
-      const result = await service.update(workspace);
+      const result = await service.update('1', workspaceDto);
 
       expect(repository.save).toHaveBeenCalledWith(workspace);
       expect(result).toEqual(workspace);

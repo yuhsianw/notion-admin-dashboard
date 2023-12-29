@@ -1,4 +1,4 @@
-import { IsBoolean, IsString, IsOptional } from 'class-validator';
+import { IsBoolean, IsString, IsOptional, IsArray } from 'class-validator';
 
 /**
  * Data transfer object for updating a workspace.
@@ -15,4 +15,8 @@ export class UpdateWorkspaceDto {
   @IsOptional()
   @IsBoolean()
   samlEnabled: boolean;
+
+  @IsOptional()
+  @IsArray()
+  members: string[];
 }

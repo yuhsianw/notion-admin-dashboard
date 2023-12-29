@@ -1,4 +1,4 @@
-import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
+import { IsArray, IsBoolean, IsNotEmpty, IsString } from 'class-validator';
 
 /**
  * Data transfer object for creating a workspace.
@@ -17,4 +17,7 @@ export class CreateWorkspaceDto {
   @IsNotEmpty()
   @IsBoolean()
   samlEnabled: boolean;
+
+  @IsArray()
+  members: string[];
 }
