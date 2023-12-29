@@ -27,8 +27,11 @@ import { Box } from '@mui/material';
 import EditToolbar from './EditToolBar';
 import { GetUserDto } from '../../dto/get-user.dto';
 import GetWorkspaceDto from '../../dto/get-workspace.dto';
+import { WorkspaceGridRow } from '../Workspaces/WorkspacesTable';
+import { UserGridRow } from '../Users/UsersTable';
 
 interface TableProps {
+  defaultRows: WorkspaceGridRow[] | UserGridRow[];
   rows: GridRowsProp;
   setRows: (rows: GridRowsProp) => void;
   columns: GridColDef[];
@@ -41,6 +44,7 @@ interface TableProps {
 }
 
 export default function Table({
+  defaultRows,
   rows,
   setRows,
   columns,
@@ -200,7 +204,15 @@ export default function Table({
           toolbar: EditToolbar,
         }}
         slotProps={{
-          toolbar: { setRows, setRowModesModel, columns },
+          toolbar: {
+            defaultRows,
+            rows,
+            setRows,
+            deleteRow,
+            saveRow,
+            setRowModesModel,
+            columns,
+          },
         }}
       />
     </Box>

@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { GridColDef, GridRowsProp } from '@mui/x-data-grid';
 import Table from '../Table/Table';
-import { POLLING_INTERVAL } from '../../config/constants';
+import {
+  DEFAULT_WORKSPACE_ROWS,
+  POLLING_INTERVAL,
+} from '../../config/constants';
 import {
   createWorkspace,
   deleteWorkspace,
@@ -10,7 +13,7 @@ import {
 } from '../../services/workspaceService';
 import GetWorkspaceDto from '../../dto/get-workspace.dto';
 
-interface WorkspaceGridRow {
+export interface WorkspaceGridRow {
   id: string;
   name: string;
   domain: string;
@@ -100,6 +103,7 @@ export default function WorkspaceTable() {
 
   return (
     <Table
+      defaultRows={DEFAULT_WORKSPACE_ROWS}
       rows={rows}
       columns={columns}
       setRows={setRows}

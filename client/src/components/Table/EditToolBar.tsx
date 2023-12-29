@@ -18,10 +18,17 @@ import {
 } from '@mui/x-data-grid';
 import { randomId } from '@mui/x-data-grid-generator';
 import AddIcon from '@mui/icons-material/Add';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import React from 'react';
+import CreateWorkspaceDto from '../../dto/create-workspace.dto';
+import { WorkspaceGridRow } from '../Workspaces/WorkspacesTable';
 
 interface EditToolbarProps {
+  rows: GridRowsProp;
+  defaultRows: WorkspaceGridRow[];
   setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
+  deleteRow: (id: string) => void;
+  saveRow: (row: CreateWorkspaceDto) => Promise<CreateWorkspaceDto | null>;
   setRowModesModel: (
     newModel: (oldModel: GridRowModesModel) => GridRowModesModel,
   ) => void;
@@ -29,11 +36,15 @@ interface EditToolbarProps {
 }
 
 export default function EditToolbar({
+  defaultRows,
+  rows,
   setRows,
+  deleteRow,
+  saveRow,
   setRowModesModel,
   columns,
 }: EditToolbarProps) {
-  const handleClick = () => {
+  const handleAddClick = () => {
     /**
      * IDs are generated both here and in the server, where the latter persists
      * once synced. This hybrid approach has the following benefits:
@@ -49,8 +60,8 @@ export default function EditToolbar({
     const id = randomId();
     setRows((oldRows) => [
       ...oldRows,
-      // { id, isNew: true },
-      { id, firstName: 'GG', lastName: 'GG', email: 'gg@com', isNew: true },
+      { id, isNew: true },
+      // { id, firstName: 'GG', lastName: 'GG', email: 'gg@com', isNew: true },
     ]);
     setRowModesModel((oldModel) => {
       return {
@@ -61,11 +72,31 @@ export default function EditToolbar({
     });
   };
 
+  const handleResetClick = async () => {
+    for (const row of rows) {
+      await deleteRow(row.id);
+    }
+    setRows(() => []);
+    setRowModesModel(() => ({}));
+    for (const row of defaultRows) {
+      await saveRow(row);
+    }
+  };
+
   return (
     <GridToolbarContainer>
-      <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
+      <Button color="primary" startIcon={<AddIcon />} onClick={handleAddClick}>
         Add
       </Button>
+      {/* TODO: Add confirm modal and progress circle before publishing */}
+      {process.env.NODE_ENV === 'development' && (
+        <Button
+          color="primary"
+          startIcon={<RestartAltIcon />}
+          onClick={handleResetClick}>
+          Reset
+        </Button>
+      )}
     </GridToolbarContainer>
   );
 }

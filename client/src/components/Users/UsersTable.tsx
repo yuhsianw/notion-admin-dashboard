@@ -8,9 +8,9 @@ import {
 } from '../../services/userService';
 import Table from '../Table/Table';
 import { GetUserDto } from '../../dto/get-user.dto';
-import { POLLING_INTERVAL } from '../../config/constants';
+import { DEFAULT_USER_ROWS, POLLING_INTERVAL } from '../../config/constants';
 
-interface UserGridRow {
+export interface UserGridRow {
   id: string;
   firstName: string;
   lastName: string;
@@ -104,6 +104,7 @@ export default function UserTable() {
 
   return (
     <Table
+      defaultRows={DEFAULT_USER_ROWS}
       rows={rows}
       columns={columns}
       setRows={setRows}
