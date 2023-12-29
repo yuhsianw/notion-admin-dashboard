@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { WorkspacesModule } from './workspaces/workspaces.module';
+import { UserWorkspaceModule } from './user-workspace/user-workspace.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { WorkspacesModule } from './workspaces/workspaces.module';
     }),
     UsersModule,
     WorkspacesModule,
+    UserWorkspaceModule,
   ],
   controllers: [AppController],
   providers: [AppService],
