@@ -44,6 +44,7 @@ export default function WorkspaceTable() {
       field: 'samlEnabled',
       headerName: 'SAML Enabled',
       width: 220,
+      type: 'boolean',
       editable: true,
     },
     /**
@@ -65,7 +66,7 @@ export default function WorkspaceTable() {
     rowsRef.current = rows;
   }, [rows]);
 
-  const updateRows = () => {
+  const fetchRows = () => {
     getAllWorkspaces()
       .then((data) => {
         // keep the newly added unsaved rows
@@ -90,10 +91,10 @@ export default function WorkspaceTable() {
   };
 
   useEffect(() => {
-    updateRows();
+    fetchRows();
 
     const pollingInterval = setInterval(() => {
-      updateRows();
+      fetchRows();
     }, POLLING_INTERVAL);
 
     return () => {
