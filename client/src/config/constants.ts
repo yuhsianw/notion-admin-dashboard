@@ -2,12 +2,16 @@ import { randomId } from '@mui/x-data-grid-generator';
 import { UserGridRow } from '../components/Users/UsersTable';
 import { WorkspaceGridRow } from '../components/Workspaces/WorkspacesTable';
 
-export const DRAWER_WIDTH = 240;
 
+/**
+ * API
+*/
 export const BASE_URL = 'http://localhost:3000';
-
 export const POLLING_INTERVAL = 1000 * 5;
 
+/**
+ * Data
+ */
 export const DEFAULT_WORKSPACE_ROWS: WorkspaceGridRow[] = [
   {
     id: randomId(),
@@ -38,7 +42,6 @@ export const DEFAULT_WORKSPACE_ROWS: WorkspaceGridRow[] = [
     members: [],
   },
 ];
-
 export const DEFAULT_USER_ROWS: UserGridRow[] = [
   {
     id: randomId(),
@@ -55,3 +58,10 @@ export const DEFAULT_USER_ROWS: UserGridRow[] = [
     workspaces: [],
   },
 ];
+
+/**
+ * UI
+ */
+export const DRAWER_WIDTH = 240;
+export const EDIT_CELL_ITEM_HEIGHT = 48;
+export const EDIT_CELL_ITEM_PADDING_TOP = 8;
