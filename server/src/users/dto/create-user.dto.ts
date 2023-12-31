@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsEmail, IsString } from 'class-validator';
+import { IsNotEmpty, IsEmail, IsString, IsArray } from 'class-validator';
 
 /**
  * Data transfer object for creating a user.
@@ -17,4 +17,7 @@ export class CreateUserDto {
   @IsNotEmpty()
   @IsEmail()
   email: string;
+
+  @IsArray()
+  workspaces: string[];
 }
