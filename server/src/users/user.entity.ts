@@ -1,5 +1,11 @@
-import { Workspace } from '../workspaces/workspaces.entity';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
+import { UserWorkspace } from 'src/user-workspace/user-workspace.entity';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  JoinColumn,
+  OneToMany,
+} from 'typeorm';
 
 /**
  * User entity is the abstraction of the database user table. A recommended
@@ -21,6 +27,10 @@ export class User {
   @Column()
   email: string;
 
-  @ManyToMany(() => Workspace, (workspace) => workspace.members)
-  workspaces: Workspace[];
+  /**
+   * One user can have many memberships.
+   */
+  @OneToMany(() => UserWorkspace, (userWorkspace) => userWorkspace.user)
+  @JoinColumn()
+  memberships: UserWorkspace[];
 }
