@@ -9,6 +9,7 @@ import {
 import Table from '../Table/Table';
 import { GetUserDto } from '../../dto/get-user.dto';
 import { DEFAULT_USER_ROWS, POLLING_INTERVAL } from '../../config/constants';
+import { renderEmail } from '@mui/x-data-grid-generator';
 
 export interface UserGridRow {
   id: string;
@@ -40,14 +41,12 @@ export default function UserTable() {
       editable: true,
     },
     { field: 'lastName', headerName: 'Last Name', width: 180, editable: true },
-    /**
-     * TODO:  Update email colDef https://github.com/mui/mui-x/blob/a769a9164c233116a7186e4e65d56d83003c0b6f/packages/grid/x-data-grid-generator/src/columns/employees.columns.tsx#L84C4-L84C4
-     */
     {
       field: 'email',
       headerName: 'Email',
       width: 220,
       editable: true,
+      renderCell: renderEmail,
     },
     /**
      * TODO:  Multiple select for workspaces
@@ -68,7 +67,7 @@ export default function UserTable() {
     rowsRef.current = rows;
   }, [rows]);
 
-  const updateRows = () => {
+  const fetchRows = () => {
     getAllUsers()
       .then((data) => {
         // keep the newly added unsaved rows
@@ -91,10 +90,10 @@ export default function UserTable() {
   };
 
   useEffect(() => {
-    updateRows();
+    fetchRows();
 
     const pollingInterval = setInterval(() => {
-      updateRows();
+      fetchRows();
     }, POLLING_INTERVAL);
 
     return () => {
