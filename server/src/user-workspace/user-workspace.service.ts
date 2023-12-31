@@ -50,34 +50,49 @@ export class UserWorkspaceService {
   }
 
   /**
-   * Creates memberships with the given list of user IDs.
-   * @param workspaceId - The ID of the workspace.
-   * @param userIds - An array of user IDs.
+   * Finds all memberships by user ID.
+   * @param userId - The ID of the user.
+   * @returns A promise that resolves to an array of memberships.
+   */
+  async findMembershipsByUserId(userId: string): Promise<UserWorkspace[]> {
+    return this.userWorkspaceRepository.findBy({
+      userId,
+    });
+  }
+
+  /**
+   * Creates memberships for all user-workspace pairs.
+   * @param workspaceIds - The IDs of the workspaces.
+   * @param userIds - The IDs of the users.
    * @returns A promise that resolves when the memberships are created.
    */
-  async createMembershipsWithUserIds(
-    workspaceId: string,
+  async createMemberships(
+    workspaceIds: string[],
     userIds: string[],
   ): Promise<void> {
     // TODO: Use transactions https://typeorm.io/transactions
-    for (const userId of userIds) {
-      await this.create({ workspaceId, userId });
+    for (const workspaceId of workspaceIds) {
+      for (const userId of userIds) {
+        await this.create({ workspaceId, userId });
+      }
     }
   }
 
   /**
-   * Removes memberships with the given user IDs.
-   * @param workspaceId - The ID of the workspace.
-   * @param userIds - An array of user IDs.
+   * Removes memberships for all user-workspace pairs.
+   * @param workspaceIds - The IDs of the workspaces.
+   * @param userIds - The IDs of the users.
    * @returns A promise that resolves when the memberships are removed.
    */
-  async removeMembershipsWithUserIds(
-    workspaceId: string,
+  async removeMemberships(
+    workspaceIds: string[],
     userIds: string[],
   ): Promise<void> {
     // TODO: Use transactions https://typeorm.io/transactions
-    for (const userId of userIds) {
-      await this.remove(workspaceId, userId);
+    for (const workspaceId of workspaceIds) {
+      for (const userId of userIds) {
+        await this.remove(workspaceId, userId);
+      }
     }
   }
 }

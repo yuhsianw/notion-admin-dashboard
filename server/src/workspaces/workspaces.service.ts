@@ -62,12 +62,12 @@ export class WorkspacesService {
     ).map((membership) => membership.userId);
 
     const changeLists = this.getMemberChangeLists(oldMemberIds, newMemberIds);
-    await this.userWorkspaceService.createMembershipsWithUserIds(
-      workspaceId,
+    await this.userWorkspaceService.createMemberships(
+      [workspaceId],
       changeLists.addedMemberIds,
     );
-    await this.userWorkspaceService.removeMembershipsWithUserIds(
-      workspaceId,
+    await this.userWorkspaceService.removeMemberships(
+      [workspaceId],
       changeLists.removedMemberIds,
     );
   }
@@ -143,6 +143,7 @@ export class WorkspacesService {
    * @returns A promise that resolves when the workspace is successfully removed.
    */
   async remove(id: string): Promise<void> {
+    await this.updateMemberships(id, []);
     await this.workspacesRepository.delete(id);
   }
 }
