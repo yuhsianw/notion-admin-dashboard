@@ -1,11 +1,15 @@
 import { SelectChangeEvent, Select, MenuItem, Checkbox } from '@mui/material';
-import { GridRenderEditCellParams, useGridApiContext } from '@mui/x-data-grid';
+import { GridRenderEditCellParams } from '@mui/x-data-grid';
 import React from 'react';
-import { GetUserDto } from '../../dto/get-user.dto';
 import {
   EDIT_CELL_ITEM_HEIGHT,
   EDIT_CELL_ITEM_PADDING_TOP,
 } from '../../config/constants';
+
+export interface MultipleSelectEditCellOption {
+  value: string;
+  label: string;
+}
 
 /**
  * Custom edit cell for multiple select.
@@ -18,25 +22,18 @@ export default function MultipleSelectEditCell({
   id,
   value = [],
   field,
-  userOptions,
-}: GridRenderEditCellParams & { userOptions: GetUserDto[] }) {
-  const apiRef = useGridApiContext();
+  options,
+  api,
+}: GridRenderEditCellParams & { options: MultipleSelectEditCellOption[] }) {
+  console.log('value', value);
 
   const handleChange = (event: SelectChangeEvent<string[]>) => {
-    apiRef.current.setEditCellValue({
+    api.setEditCellValue({
       id,
       field,
       value: event.target.value,
     });
   };
-
-  const getSelectedLabel = (value: string) => {
-    const option = userOptions.find((user) => user.id === value);
-    return option ? getOptionLabel(option) : '';
-  };
-
-  const getOptionLabel = (option: GetUserDto) =>
-    `${option.firstName} ${option.lastName}`;
 
   return (
     <Select
@@ -54,11 +51,26 @@ export default function MultipleSelectEditCell({
           },
         },
       }}
-      renderValue={(selected) => selected.map(getSelectedLabel).join(', ')}>
-      {userOptions.map((option) => (
-        <MenuItem key={option.id} value={option.id}>
-          <Checkbox checked={value.indexOf(option.id) > -1} />
-          {getOptionLabel(option)}
+      renderValue={(selectedValues) => {
+        // TODO: Improve UX, e.g. use tag and dynamical row height in edit mode.
+        // return (
+        //   <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+        //     {selected.map((value) => (
+        //       <Chip key={value} label={getSelectedLabel(value)} />
+        //     ))}
+        //   </Box>
+        // );
+        return selectedValues
+          .map((value) => {
+            const option = options.find((option) => option.value === value);
+            return option?.label ?? '';
+          })
+          .join(', ');
+      }}>
+      {options.map((option) => (
+        <MenuItem key={option.value} value={option.value}>
+          <Checkbox checked={value.indexOf(option.value) > -1} />
+          {option.label}
         </MenuItem>
       ))}
     </Select>

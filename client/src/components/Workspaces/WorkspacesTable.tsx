@@ -14,7 +14,9 @@ import {
 import GetWorkspaceDto from '../../dto/get-workspace.dto';
 import userService from '../../services/userService';
 import { GetUserDto } from '../../dto/get-user.dto';
-import MultipleSelectEditCell from '../Table/MultipleSelectEditCell';
+import MultipleSelectEditCell, {
+  MultipleSelectEditCellOption,
+} from '../Table/MultipleSelectEditCell';
 
 export interface WorkspaceGridRow {
   id: string;
@@ -31,7 +33,9 @@ export default function WorkspaceTable() {
    * will allow the pollingInterval to access the latest rows.
    */
   const rowsRef = useRef(rows);
-  const [userOptions, setUserOptions] = useState<GetUserDto[]>([]);
+  const [userOptions, setUserOptions] = useState<
+    MultipleSelectEditCellOption[]
+  >([]);
   /**
    * TODO:  Add column validation https://mui.com/x/react-data-grid/filtering/quick-filter/#custom-filtering-logic
    */
@@ -58,19 +62,34 @@ export default function WorkspaceTable() {
       editable: true,
       sortable: false,
       valueOptions: userOptions,
+      valueFormatter: ({ value }) => {
+        return value
+          .map((userId) => {
+            const user = userOptions.find((user) => user.value === userId);
+            return user ? user.label : '';
+          })
+          .join(', ');
+      },
       renderEditCell: (params) => (
         <MultipleSelectEditCell
-          userOptions={userOptions}
+          options={userOptions}
+          value={params.value}
           {...params}></MultipleSelectEditCell>
       ),
-      // TODO:
+      // TODO: Allow filtering by members
+      filterable: false,
       // filterOperators: []
-    } as GridColDef<any, GetUserDto, any>,
+    } as GridColDef<any, GetUserDto['workspaces'], any>,
   ];
 
   useEffect(() => {
     userService.getAllUsers().then((data) => {
-      setUserOptions(data);
+      setUserOptions(
+        data.map((user) => ({
+          value: user.id,
+          label: `${user.firstName} ${user.lastName}`,
+        })),
+      );
     });
   }, []);
 
