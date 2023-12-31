@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { CreateWorkspaceDto } from './dto/create-workspace.dto';
 import { UpdateWorkspaceDto } from './dto/update-workspace.dto';
 import { UserWorkspaceService } from 'src/user-workspace/user-workspace.service';
+import { GetWorkspaceDto } from './dto/get-workspace.dto';
 
 interface MemberChangeLists {
   addedMemberIds: string[];
@@ -48,6 +49,26 @@ export class WorkspacesService {
     };
   }
 
+  private async getWorkspaceMembers(workspaceId: string): Promise<string[]> {
+    return (
+      await this.userWorkspaceService.findMembershipsByWorkspaceId(workspaceId)
+    ).map((membership) => membership.userId);
+  }
+
+  private async createGetWorkspaceDto(
+    workspace: Workspace,
+  ): Promise<GetWorkspaceDto> {
+    const workspaceDto: GetWorkspaceDto = {
+      id: workspace.id,
+      name: workspace.name,
+      domain: workspace.domain,
+      samlEnabled: workspace.samlEnabled,
+      members: [],
+    };
+    workspaceDto.members = await this.getWorkspaceMembers(workspace.id);
+    return workspaceDto;
+  }
+
   /**
    * Update workspace memberships.
    * @param workspaceId the ID of workspace to update.
@@ -57,9 +78,7 @@ export class WorkspacesService {
     workspaceId: string,
     newMemberIds: string[],
   ): Promise<void> {
-    const oldMemberIds = (
-      await this.userWorkspaceService.findMembershipsByWorkspaceId(workspaceId)
-    ).map((membership) => membership.userId);
+    const oldMemberIds = await this.getWorkspaceMembers(workspaceId);
 
     const changeLists = this.getMemberChangeLists(oldMemberIds, newMemberIds);
     await this.userWorkspaceService.createMemberships(
@@ -77,7 +96,7 @@ export class WorkspacesService {
    * @param workspaceDto - The workspace object to be created.
    * @returns A promise that resolves to the created workspace.
    */
-  async create(workspaceDto: CreateWorkspaceDto): Promise<Workspace> {
+  async create(workspaceDto: CreateWorkspaceDto): Promise<GetWorkspaceDto> {
     /**
      * Create the workspace then assign members.
      */
@@ -87,15 +106,18 @@ export class WorkspacesService {
     if (workspaceDto.members !== undefined) {
       await this.updateMemberships(newWorkspace.id, workspaceDto.members);
     }
-    return newWorkspace;
+    return this.createGetWorkspaceDto(newWorkspace);
   }
 
   /**
    * Retrieves all workspaces.
    * @returns A promise that resolves to an array of workspaces.
    */
-  findAll(): Promise<Workspace[]> {
-    return this.workspacesRepository.find();
+  async findAll(): Promise<GetWorkspaceDto[]> {
+    const workspaces = await this.workspacesRepository.find();
+    return Promise.all(
+      workspaces.map((workspace) => this.createGetWorkspaceDto(workspace)),
+    );
   }
 
   /**
@@ -103,8 +125,9 @@ export class WorkspacesService {
    * @param id - The ID of the workspace to retrieve.
    * @returns A promise that resolves to the retrieved workspace, or null if not found.
    */
-  findOne(id: string): Promise<Workspace | null> {
-    return this.workspacesRepository.findOneBy({ id });
+  async findOne(id: string): Promise<GetWorkspaceDto | null> {
+    const workspace = await this.workspacesRepository.findOneBy({ id });
+    return this.createGetWorkspaceDto(workspace);
   }
 
   /**
@@ -117,7 +140,7 @@ export class WorkspacesService {
   async update(
     id: string,
     updateWorkspaceDto: UpdateWorkspaceDto,
-  ): Promise<Workspace> {
+  ): Promise<GetWorkspaceDto> {
     const workspace = await this.findOne(id);
     if (!workspace) throw new NotFoundException('Workspace not found');
 
