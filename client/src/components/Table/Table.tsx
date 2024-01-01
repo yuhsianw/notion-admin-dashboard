@@ -24,7 +24,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Box } from '@mui/material';
-import EditToolbar from './EditToolBar';
+import TableToolbar from './TableToolBar';
 import { GetUserDto } from '../../dto/get-user.dto';
 import GetWorkspaceDto from '../../dto/get-workspace.dto';
 import { WorkspaceGridRow } from '../Workspaces/WorkspacesTable';
@@ -201,7 +201,7 @@ export default function Table({
         onRowEditStop={handleRowEditStop}
         processRowUpdate={processRowUpdate}
         slots={{
-          toolbar: EditToolbar,
+          toolbar: TableToolbar,
         }}
         slotProps={{
           toolbar: {

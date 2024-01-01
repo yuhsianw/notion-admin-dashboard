@@ -23,7 +23,7 @@ import React from 'react';
 import CreateWorkspaceDto from '../../dto/create-workspace.dto';
 import { WorkspaceGridRow } from '../Workspaces/WorkspacesTable';
 
-interface EditToolbarProps {
+interface TableToolbarProps {
   rows: GridRowsProp;
   defaultRows: WorkspaceGridRow[];
   setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
@@ -35,7 +35,7 @@ interface EditToolbarProps {
   columns: GridColDef[];
 }
 
-export default function EditToolbar({
+export default function TableToolbar({
   defaultRows,
   rows,
   setRows,
@@ -43,7 +43,7 @@ export default function EditToolbar({
   saveRow,
   setRowModesModel,
   columns,
-}: EditToolbarProps) {
+}: TableToolbarProps) {
   const handleAddClick = () => {
     /**
      * IDs are generated both here and in the server, where the latter persists
@@ -72,6 +72,11 @@ export default function EditToolbar({
     });
   };
 
+  /**
+   * Resets table to default rows.
+   * TODO: This should be done by sending a single request to the server.
+   * TODO: Add confirm modal and progress circle.
+   */
   const handleResetClick = async () => {
     for (const row of rows) {
       await deleteRow(row.id);
@@ -88,15 +93,12 @@ export default function EditToolbar({
       <Button color="primary" startIcon={<AddIcon />} onClick={handleAddClick}>
         Add
       </Button>
-      {/* TODO: Add confirm modal and progress circle before publishing */}
-      {process.env.NODE_ENV === 'development' && (
-        <Button
-          color="primary"
-          startIcon={<RestartAltIcon />}
-          onClick={handleResetClick}>
-          Reset
-        </Button>
-      )}
+      <Button
+        color="primary"
+        startIcon={<RestartAltIcon />}
+        onClick={handleResetClick}>
+        Reset
+      </Button>
     </GridToolbarContainer>
   );
 }
