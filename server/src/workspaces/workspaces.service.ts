@@ -25,10 +25,10 @@ export class WorkspacesService {
   ) {}
 
   /**
-   * Returns the list of members that were added and removed.
-   * @param oldMemberIds the old list of member IDs
-   * @param newMemberIds the new list of member IDs
-   * @returns
+   * Get the list of members that were added and removed.
+   * @param oldMemberIds - The old list of member IDs.
+   * @param newMemberIds - The new list of member IDs.
+   * @returns An object containing the added and removed member IDs.
    */
   private getMemberChangeLists(
     oldMemberIds: string[],
@@ -49,12 +49,22 @@ export class WorkspacesService {
     };
   }
 
+  /**
+   * Get the list of members in a workspace.
+   * @param workspaceId - The ID of the workspace.
+   * @returns A promise that resolves to the list of member IDs.
+   */
   private async getWorkspaceMembers(workspaceId: string): Promise<string[]> {
     return (
       await this.userWorkspaceService.findMembershipsByWorkspaceId(workspaceId)
     ).map((membership) => membership.userId);
   }
 
+  /**
+   * Create a GetWorkspaceDto from a Workspace object.
+   * @param workspace - The workspace object.
+   * @returns A promise that resolves to the GetWorkspaceDto.
+   */
   private async createGetWorkspaceDto(
     workspace: Workspace,
   ): Promise<GetWorkspaceDto> {
@@ -63,9 +73,8 @@ export class WorkspacesService {
       name: workspace.name,
       domain: workspace.domain,
       samlEnabled: workspace.samlEnabled,
-      members: [],
+      members: await this.getWorkspaceMembers(workspace.id),
     };
-    workspaceDto.members = await this.getWorkspaceMembers(workspace.id);
     return workspaceDto;
   }
 
@@ -127,7 +136,7 @@ export class WorkspacesService {
    */
   async findOne(id: string): Promise<GetWorkspaceDto | null> {
     const workspace = await this.workspacesRepository.findOneBy({ id });
-    return this.createGetWorkspaceDto(workspace);
+    return workspace ? this.createGetWorkspaceDto(workspace) : null;
   }
 
   /**
@@ -157,7 +166,8 @@ export class WorkspacesService {
       await this.updateMemberships(workspace.id, updateWorkspaceDto.members);
     }
 
-    return this.workspacesRepository.save(workspace);
+    const updatedWorkspace = await this.workspacesRepository.save(workspace);
+    return this.createGetWorkspaceDto(updatedWorkspace);
   }
 
   /**
