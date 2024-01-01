@@ -5,6 +5,7 @@ import { User } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserWorkspaceService } from 'src/user-workspace/user-workspace.service';
+import { GetUserDto } from './dto/get-user.dto';
 
 interface WorkspaceChangeLists {
   addedWorkspaceIds: string[];
@@ -75,45 +76,74 @@ export class UsersService {
   }
 
   /**
-   * Create a new user.
-   * @param userDto - The user data.
-   * @returns The created user.
+   * Get the user's memberships.
+   * @param userId - The ID of the user.
+   * @returns A promise that resolves with an array of workspace IDs.
    */
-  async create(userDto: CreateUserDto) {
+  private async getUserMemberships(userId: string): Promise<string[]> {
+    return (
+      await this.userWorkspaceService.findMembershipsByUserId(userId)
+    ).map((membership) => membership.workspaceId);
+  }
+
+  /**
+   * Create a GetUserDto object from a User object.
+   * @param user - The User object.
+   * @returns A promise that resolves with a GetUserDto object.
+   */
+  async createGetUserDto(user: User): Promise<GetUserDto> {
+    const userDto: GetUserDto = {
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      workspaces: await this.getUserMemberships(user.id),
+    };
+    return userDto;
+  }
+
+  /**
+   * Create a new user.
+   * @param userDto - The CreateUserDto object.
+   * @returns A promise that resolves with a GetUserDto object of the created user.
+   */
+  async create(userDto: CreateUserDto): Promise<GetUserDto> {
     const newUser = await this.usersRepository.save(
       Object.assign(new User(), userDto),
     );
     if (userDto.workspaces !== undefined) {
       await this.updateMemberships(newUser.id, userDto.workspaces);
     }
-    return newUser;
+    return this.createGetUserDto(newUser);
   }
 
   /**
    * Get all users.
-   * @returns A list of users.
+   * @returns A promise that resolves with an array of GetUserDto objects.
    */
-  findAll() {
-    return this.usersRepository.find();
+  async findAll(): Promise<GetUserDto[]> {
+    const users = await this.usersRepository.find();
+    return Promise.all(users.map((user) => this.createGetUserDto(user)));
   }
 
   /**
    * Get a user by ID.
    * @param id - The ID of the user.
-   * @returns The user with the specified ID, or null if not found.
+   * @returns A promise that resolves with a GetUserDto object of the found user, or null if not found.
    */
-  findOne(id: string): Promise<User | null> {
-    return this.usersRepository.findOneBy({ id });
+  async findOne(id: string): Promise<GetUserDto | null> {
+    const user = await this.usersRepository.findOneBy({ id });
+    return user ? this.createGetUserDto(user) : null;
   }
 
   /**
-   * Update a user by ID.
+   * Update a user.
    * @param id - The ID of the user.
-   * @param updateUserDto - Object containing fields to update.
-   * @returns The updated user.
+   * @param updateUserDto - The UpdateUserDto object.
+   * @returns A promise that resolves with a GetUserDto object of the updated user.
    * @throws NotFoundException if the user is not found.
    */
-  async update(id: string, updateUserDto: UpdateUserDto) {
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<GetUserDto> {
     const user = await this.findOne(id);
     if (!user) throw new NotFoundException('User not found');
 
@@ -131,13 +161,13 @@ export class UsersService {
       await this.updateMemberships(user.id, updateUserDto.workspaces);
     }
 
-    // Save the updated user to the database
-    return this.usersRepository.save(user);
+    const updatedUser = await this.usersRepository.save(user);
+    return this.createGetUserDto(updatedUser);
   }
 
   /**
-   * Remove a user by ID.
-   * @param id - The ID of the user to remove.
+   * Remove a user.
+   * @param id - The ID of the user.
    * @returns A promise that resolves when the user is removed.
    */
   async remove(id: string): Promise<void> {
