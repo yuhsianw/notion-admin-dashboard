@@ -11,12 +11,13 @@ import { WorkspacesService } from './workspaces.service';
 import { CreateWorkspaceDto } from './dto/create-workspace.dto';
 import { UpdateWorkspaceDto } from './dto/update-workspace.dto';
 import { GetWorkspaceDto } from './dto/get-workspace.dto';
+import { API_BASE_URL } from 'src/config/constants';
 
 /**
  * Controller for managing workspace operations.
  * TODO: Return the correct error code. Default is 500.
  */
-@Controller('workspaces')
+@Controller(`${API_BASE_URL}/workspaces`)
 export class WorkspacesController {
   constructor(private workspacesService: WorkspacesService) {}
 

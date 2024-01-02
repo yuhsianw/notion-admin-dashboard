@@ -11,11 +11,12 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { GetUserDto } from './dto/get-user.dto';
+import { API_BASE_URL } from 'src/config/constants';
 
 /**
  * Controller for managing user operations.
  */
-@Controller('users')
+@Controller(`${API_BASE_URL}/users`)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 

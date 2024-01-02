@@ -1,4 +1,5 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import exp from 'constants';
 import { join } from 'path';
 
 /**
@@ -36,3 +37,8 @@ export const DATABASE_CONNECTION_CONFIG: TypeOrmModuleOptions = {
 export const STATIC_FILE_SERVING_CONFIG = {
   rootPath: join(__dirname, '..', '..', 'public', 'client'),
 };
+
+/**
+ * Base URL for API endpoints.
+ */
+export const API_BASE_URL = '/api';

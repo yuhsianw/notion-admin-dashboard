@@ -6,7 +6,7 @@ import { WorkspaceGridRow } from '../components/Workspaces/WorkspacesTable';
 /**
  * API
 */
-export const BASE_URL = 'http://localhost:3000';
+export const BASE_URL = 'http://localhost:3000/api';
 export const POLLING_INTERVAL = 1000 * 5;
 
 /**
