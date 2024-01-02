@@ -10,10 +10,10 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { GetUserDto } from './dto/get-user.dto';
 
 /**
  * Controller for managing user operations.
- * TODO: Return the correct error code
  */
 @Controller('users')
 export class UsersController {
@@ -25,7 +25,7 @@ export class UsersController {
    * @returns A promise that resolves to the created user.
    */
   @Post()
-  async create(@Body() createUserDto: CreateUserDto) {
+  async create(@Body() createUserDto: CreateUserDto): Promise<GetUserDto> {
     return this.usersService.create(createUserDto);
   }
 
@@ -34,7 +34,7 @@ export class UsersController {
    * @returns A promise that resolves to an array of users.
    */
   @Get()
-  async findAll() {
+  async findAll(): Promise<GetUserDto[]> {
     return this.usersService.findAll();
   }
 
@@ -44,7 +44,7 @@ export class UsersController {
    * @returns A promise that resolves to the user with the specified ID.
    */
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string): Promise<GetUserDto> {
     return this.usersService.findOne(id);
   }
 
@@ -55,17 +55,20 @@ export class UsersController {
    * @returns A promise that resolves to the updated user.
    */
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  async update(
+    @Param('id') id: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ): Promise<GetUserDto> {
     return this.usersService.update(id, updateUserDto);
   }
 
   /**
    * Delete a user by ID.
    * @param id - The ID of the user.
-   * @returns A promise that resolves to void.
+   * @returns A promise that resolves when the user is deleted.
    */
   @Delete(':id')
-  async remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string): Promise<void> {
     return this.usersService.remove(id);
   }
 }

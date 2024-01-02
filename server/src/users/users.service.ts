@@ -24,6 +24,9 @@ export class UsersService {
     @InjectRepository(User)
     private usersRepository: Repository<User>,
 
+    /**
+     * Inject service for managing memberships (user-workspace relationship).
+     */
     private userWorkspaceService: UserWorkspaceService,
   ) {}
 

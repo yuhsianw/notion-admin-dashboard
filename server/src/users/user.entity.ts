@@ -8,9 +8,8 @@ import {
 } from 'typeorm';
 
 /**
- * User entity is the abstraction of the database user table. A recommended
- * practice is to decouple the two by creating an entity schema. Skipping that
- * for simplicity.
+ * User entity is the abstraction of the database user table.
+ * TODO: Decouple the two by creating an entity schema.
  * @see: https://docs.nestjs.com/techniques/database#separating-entity-definition
  */
 @Entity()
@@ -29,6 +28,8 @@ export class User {
 
   /**
    * One user can have many memberships.
+   * `JoinColumn` marks this as the owner of the relationship. A foreign key
+   * will be created on the `user_workspace` table.
    */
   @OneToMany(() => UserWorkspace, (userWorkspace) => userWorkspace.user)
   @JoinColumn()

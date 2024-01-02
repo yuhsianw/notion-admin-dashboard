@@ -36,6 +36,7 @@ describe('UsersController', () => {
         firstName: 'John',
         lastName: 'Doe',
         email: 'johndoe@example.com',
+        workspaces: [],
       };
       const createdUser = {
         id: '1',
