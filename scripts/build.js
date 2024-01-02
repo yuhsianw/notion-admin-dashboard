@@ -15,4 +15,8 @@ fs.copySync(
   path.join(rootDirectory, 'server', 'public', 'client'),
 );
 
-console.log('Build and copy completed successfully.');
+// Step 3: Build the server app
+console.log('Building server app...');
+execSync('npm run build-server', { stdio: 'inherit' });
+
+console.log('Build complete!');

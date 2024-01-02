@@ -9,6 +9,7 @@
   "scripts": {
     "build": "node scripts/build.js",
     "build-client": "cd client && npm install && npm run build",
+    "build-server": "cd server && npm install && npm run build",
     "test": "test"
   },
   "repository": {
