@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { WorkspacesModule } from './workspaces/workspaces.module';
 import { UserWorkspaceModule } from './user-workspace/user-workspace.module';
+import { DATABASE_CONNECTION_CONFIG } from './config/constants';
 
 @Module({
   imports: [
@@ -12,21 +13,8 @@ import { UserWorkspaceModule } from './user-workspace/user-workspace.module';
      * Connect to the database with TypeORM.
      * @see: https://docs.nestjs.com/techniques/database#typeorm-integration
      */
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'admin_dashboard_user',
-      password: 'password',
-      database: 'admin_dashboard',
-      synchronize: true,
-      /**
-       * This saves us from manually importing entities to root module which
-       * causes leaks.
-       *  @see: https://docs.nestjs.com/techniques/database#auto-load-entities
-       */
-      autoLoadEntities: true,
-    }),
+    TypeOrmModule.forRoot(DATABASE_CONNECTION_CONFIG),
+
     UsersModule,
     WorkspacesModule,
     UserWorkspaceModule,
