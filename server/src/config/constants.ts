@@ -1,10 +1,19 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { join } from 'path';
 
-export const PORT = 3000;
+/**
+ * Default port for the server.
+ */
+export const DEFAULT_PORT = 3000;
 
+/**
+ * Config for CORS.
+ */
 export const CORS_ORIGIN = 'http://localhost:8080';
 
+/**
+ * Config for database connection.
+ */
 export const DATABASE_CONNECTION_CONFIG: TypeOrmModuleOptions = {
   type: 'postgres',
   host: 'localhost',
@@ -21,6 +30,9 @@ export const DATABASE_CONNECTION_CONFIG: TypeOrmModuleOptions = {
   autoLoadEntities: true,
 };
 
+/**
+ * Config for serving static files.
+ */
 export const STATIC_FILE_SERVING_CONFIG = {
   rootPath: join(__dirname, '..', '..', 'public', 'client'),
 };
