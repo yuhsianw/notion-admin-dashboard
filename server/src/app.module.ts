@@ -5,7 +5,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { WorkspacesModule } from './workspaces/workspaces.module';
 import { UserWorkspaceModule } from './user-workspace/user-workspace.module';
-import { DATABASE_CONNECTION_CONFIG } from './config/constants';
+import {
+  DATABASE_CONNECTION_CONFIG,
+  STATIC_FILE_SERVING_CONFIG,
+} from './config/constants';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 @Module({
   imports: [
@@ -14,7 +18,13 @@ import { DATABASE_CONNECTION_CONFIG } from './config/constants';
      * @see: https://docs.nestjs.com/techniques/database#typeorm-integration
      */
     TypeOrmModule.forRoot(DATABASE_CONNECTION_CONFIG),
-
+    /**
+     * Config static files serving.
+     */
+    ServeStaticModule.forRoot(STATIC_FILE_SERVING_CONFIG),
+    /**
+     * Import all modules.
+     */
     UsersModule,
     WorkspacesModule,
     UserWorkspaceModule,

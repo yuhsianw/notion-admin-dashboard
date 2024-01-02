@@ -1,4 +1,5 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { join } from 'path';
 
 export const PORT = 3000;
 
@@ -18,4 +19,8 @@ export const DATABASE_CONNECTION_CONFIG: TypeOrmModuleOptions = {
    *  @see: https://docs.nestjs.com/techniques/database#auto-load-entities
    */
   autoLoadEntities: true,
+};
+
+export const STATIC_FILE_SERVING_CONFIG = {
+  rootPath: join(__dirname, '..', '..', 'public', 'client'),
 };
