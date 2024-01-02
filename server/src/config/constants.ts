@@ -1,5 +1,4 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import exp from 'constants';
 import { join } from 'path';
 
 /**
@@ -29,6 +28,22 @@ export const DATABASE_CONNECTION_CONFIG: TypeOrmModuleOptions = {
    *  @see: https://docs.nestjs.com/techniques/database#auto-load-entities
    */
   autoLoadEntities: true,
+};
+
+export const HEROKU_DATABASE_CONNECTION_CONFIG: TypeOrmModuleOptions = {
+  type: 'postgres',
+  url: process.env.DATABASE_URL,
+  synchronize: true,
+  autoLoadEntities: true,
+  /**
+   * All connectionts to Heroku Postgres must be made over SSL.
+   * @see: https://devcenter.heroku.com/articles/connecting-heroku-postgres#heroku-postgres-ssl
+   * Opt out of SSL verification for demo app.
+   * @see: https://stackoverflow.com/questions/61097695/self-signed-certificate-error-during-query-the-heroku-hosted-postgres-database
+   */
+  ssl: {
+    rejectUnauthorized: false,
+  },
 };
 
 /**
