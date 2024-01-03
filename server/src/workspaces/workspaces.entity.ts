@@ -15,10 +15,11 @@ export class Workspace {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  // TODO: Add back null restriction after completing error handling.
+  @Column({ nullable: true })
   name: string;
 
-  @Column()
+  @Column({ nullable: true })
   domain: string;
 
   @Column({ default: false })

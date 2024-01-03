@@ -4,15 +4,16 @@ import { IsArray, IsBoolean, IsNotEmpty, IsString } from 'class-validator';
  * Data transfer object for creating a workspace.
  */
 export class CreateWorkspaceDto {
-  @IsNotEmpty()
+  // TODO: Add back validation decorators after completing error handling.
+  // @IsNotEmpty()
   @IsString()
   name: string;
 
-  @IsNotEmpty()
+  // @IsNotEmpty()
   @IsString()
   domain: string;
 
-  @IsNotEmpty()
+  // @IsNotEmpty()
   @IsBoolean()
   samlEnabled: boolean;
 
