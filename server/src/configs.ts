@@ -51,7 +51,7 @@ export const HEROKU_DATABASE_CONNECTION_CONFIG: TypeOrmModuleOptions = {
  * Config for serving static files.
  */
 export const STATIC_FILE_SERVING_CONFIG = {
-  rootPath: join(__dirname, '..', '..', 'public', 'client'),
+  rootPath: join(__dirname, '..', 'public', 'client'),
 };
 
 /**
