@@ -25,9 +25,9 @@ export default function ColorModeToggle() {
         onClick={colorMode.toggleColorMode}
         color="inherit">
         {theme.palette.mode === 'dark' ? (
-          <Brightness7Icon />
-        ) : (
           <Brightness4Icon />
+        ) : (
+          <Brightness7Icon />
         )}
       </IconButton>
     </Box>
