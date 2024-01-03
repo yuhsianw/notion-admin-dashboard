@@ -41,7 +41,9 @@ export default function AppLayout() {
           <TopNavBar open={open} setOpen={setOpen} />
           <SideNav open={open} setOpen={setOpen} />
           <Main open={open}>
-            <Outlet />
+            <Box px={3} py={2}>
+              <Outlet />
+            </Box>
           </Main>
         </Box>
       </ThemeProvider>
