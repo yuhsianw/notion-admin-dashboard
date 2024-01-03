@@ -65,14 +65,16 @@ export default function UserTable() {
       sortable: false,
       valueOptions: workspaceOptions,
       valueFormatter: ({ value }) => {
-        return value
-          .map((workspaceId) => {
-            const workspace = workspaceOptions.find(
-              (workspace) => workspace.value === workspaceId,
-            );
-            return workspace ? workspace.label : '';
-          })
-          .join(', ');
+        return (
+          value
+            ?.map((workspaceId) => {
+              const workspace = workspaceOptions.find(
+                (workspace) => workspace.value === workspaceId,
+              );
+              return workspace ? workspace.label : '';
+            })
+            .join(', ') ?? ''
+        );
       },
       renderEditCell: (params) => (
         <MultipleSelectEditCell

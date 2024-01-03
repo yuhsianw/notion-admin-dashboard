@@ -19,6 +19,7 @@ export const createUser = async (data: any): Promise<GetUserDto | null> => {
     firstName: data.firstName,
     lastName: data.lastName,
     email: data.email,
+    workspaces: data.workspaces,
   };
   return axios.post(WORKSPACE_API_URL, user);
 };

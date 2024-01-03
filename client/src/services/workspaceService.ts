@@ -23,6 +23,7 @@ export const createWorkspace = async (
     name: data.name,
     domain: data.domain,
     samlEnabled: data.samlEnabled,
+    members: data.members,
   };
   return axios.post(USER_API_URL, workspace);
 };

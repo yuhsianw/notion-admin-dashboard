@@ -60,12 +60,14 @@ export default function WorkspaceTable() {
       sortable: false,
       valueOptions: userOptions,
       valueFormatter: ({ value }) => {
-        return value
-          .map((userId) => {
-            const user = userOptions.find((user) => user.value === userId);
-            return user ? user.label : '';
-          })
-          .join(', ');
+        return (
+          value
+            ?.map((userId) => {
+              const user = userOptions.find((user) => user.value === userId);
+              return user ? user.label : '';
+            })
+            .join(', ') ?? ''
+        );
       },
       renderEditCell: (params) => (
         <MultipleSelectEditCell
