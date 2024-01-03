@@ -21,7 +21,9 @@ export default function Main({ open, children }: PropsWithChildren<MainProps>) {
           {'Copyright © '}
           <Link
             color="inherit"
-            href="https://github.com/yuhsianw/notion-admin-dashboard">
+            target="_blank"
+            rel="noreferrer"
+            href="https://github.com/yuhsianw/notion-admin-dashboard?tab=MIT-1-ov-file">
             Frank Wang
           </Link>{' '}
           {new Date().getFullYear()}
