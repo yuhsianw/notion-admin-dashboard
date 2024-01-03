@@ -11,7 +11,7 @@ import { WorkspacesService } from './workspaces.service';
 import { CreateWorkspaceDto } from './dto/create-workspace.dto';
 import { UpdateWorkspaceDto } from './dto/update-workspace.dto';
 import { GetWorkspaceDto } from './dto/get-workspace.dto';
-import { API_BASE_URL } from 'src/config/constants';
+import { API_BASE_URL } from 'src/configs';
 
 /**
  * Controller for managing workspace operations.

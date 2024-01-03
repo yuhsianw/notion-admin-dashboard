@@ -9,7 +9,7 @@ import {
   DATABASE_CONNECTION_CONFIG,
   HEROKU_DATABASE_CONNECTION_CONFIG,
   STATIC_FILE_SERVING_CONFIG,
-} from './config/constants';
+} from './configs';
 import { ServeStaticModule } from '@nestjs/serve-static';
 
 @Module({

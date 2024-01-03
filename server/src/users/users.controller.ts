@@ -11,7 +11,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { GetUserDto } from './dto/get-user.dto';
-import { API_BASE_URL } from 'src/config/constants';
+import { API_BASE_URL } from 'src/configs';
 
 /**
  * Controller for managing user operations.

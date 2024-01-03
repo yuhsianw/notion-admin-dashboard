@@ -39,6 +39,7 @@ export const HEROKU_DATABASE_CONNECTION_CONFIG: TypeOrmModuleOptions = {
    * All connectionts to Heroku Postgres must be made over SSL.
    * @see: https://devcenter.heroku.com/articles/connecting-heroku-postgres#heroku-postgres-ssl
    * Opt out of SSL verification for demo app.
+   * @see: https://devcenter.heroku.com/articles/connecting-heroku-postgres#connecting-in-node-js
    * @see: https://stackoverflow.com/questions/61097695/self-signed-certificate-error-during-query-the-heroku-hosted-postgres-database
    */
   ssl: {
