@@ -123,7 +123,9 @@ export class WorkspacesService {
    * @returns A promise that resolves to an array of workspaces.
    */
   async findAll(): Promise<GetWorkspaceDto[]> {
-    const workspaces = await this.workspacesRepository.find();
+    const workspaces = await this.workspacesRepository.find({
+      order: { createdDate: 'DESC' },
+    });
     return Promise.all(
       workspaces.map((workspace) => this.createGetWorkspaceDto(workspace)),
     );

@@ -5,6 +5,7 @@ import {
   PrimaryGeneratedColumn,
   JoinColumn,
   OneToMany,
+  CreateDateColumn,
 } from 'typeorm';
 
 /**
@@ -26,6 +27,9 @@ export class User {
 
   @Column({ nullable: true })
   email: string;
+
+  @CreateDateColumn()
+  createdDate: Date;
 
   /**
    * One user can have many memberships.

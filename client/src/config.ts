@@ -49,7 +49,7 @@ export const DEFAULT_WORKSPACE_ROWS: WorkspaceGridRow[] = [
     samlEnabled: false,
     members: [],
   },
-];
+].reverse();
 export const DEFAULT_USER_ROWS: UserGridRow[] = [
   {
     id: randomId(),
@@ -142,7 +142,7 @@ export const DEFAULT_USER_ROWS: UserGridRow[] = [
     email: 'linust@example.com',
     workspaces: [],
   },
-];
+].reverse();
 
 /**
  * UI
@@ -150,3 +150,4 @@ export const DEFAULT_USER_ROWS: UserGridRow[] = [
 export const DRAWER_WIDTH = 240;
 export const EDIT_CELL_ITEM_HEIGHT = 48;
 export const EDIT_CELL_ITEM_PADDING_TOP = 8;
+export const DEFAULT_PAGE_SIZE = 10;

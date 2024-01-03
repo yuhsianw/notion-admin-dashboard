@@ -1,6 +1,7 @@
 import { UserWorkspace } from 'src/user-workspace/user-workspace.entity';
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   OneToMany,
@@ -24,6 +25,9 @@ export class Workspace {
 
   @Column({ default: false })
   samlEnabled: boolean;
+
+  @CreateDateColumn()
+  createdDate: Date;
 
   /**
    * One workspace can have many members.

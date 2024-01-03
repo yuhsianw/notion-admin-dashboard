@@ -20,6 +20,7 @@ export class UsersService {
   constructor(
     /**
      * Inject abstraction of the users table.
+     * @see: https://docs.nestjs.com/recipes/sql-typeorm#repository-pattern
      */
     @InjectRepository(User)
     private usersRepository: Repository<User>,
@@ -125,7 +126,9 @@ export class UsersService {
    * @returns A promise that resolves with an array of GetUserDto objects.
    */
   async findAll(): Promise<GetUserDto[]> {
-    const users = await this.usersRepository.find();
+    const users = await this.usersRepository.find({
+      order: { createdDate: 'DESC' },
+    });
     return Promise.all(users.map((user) => this.createGetUserDto(user)));
   }
 

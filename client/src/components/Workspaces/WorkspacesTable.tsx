@@ -111,7 +111,8 @@ export default function WorkspaceTable() {
             };
           },
         );
-        setRows([...updatedRows, ...newRows]);
+        // BUG: Do a proper merge to avoid row order changing
+        setRows([...newRows, ...updatedRows]);
       })
       .catch((error) => {
         console.log('error', error);

@@ -65,11 +65,8 @@ export default function TableToolbar({
      * @see: https://github.com/mui/mui-x/blob/e5d35580b78f5b8bb97ebf0cab2a3775f015418a/packages/grid/x-data-grid-generator/src/services/random-generator.ts#L118
      */
     const id = randomId();
-    setRows((oldRows) => [
-      ...oldRows,
-      { id, isNew: true },
-      // { id, firstName: 'GG', lastName: 'GG', email: 'gg@com', isNew: true },
-    ]);
+    const newRow = { id, isNew: true };
+    setRows((oldRows) => [newRow, ...oldRows]);
     setRowModesModel((oldModel) => {
       return {
         ...oldModel,
@@ -85,7 +82,9 @@ export default function TableToolbar({
     }
     setRows(() => []);
     setRowModesModel(() => ({}));
-    return Promise.all(defaultRows.map((row) => saveRow(row)));
+    for (const row of defaultRows) {
+      await saveRow(row);
+    }
   };
 
   /**
