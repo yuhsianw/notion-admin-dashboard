@@ -122,6 +122,9 @@ export default function WorkspaceTable() {
   useEffect(() => {
     fetchRows();
 
+    /**
+     * TODO: Add connection status https://mui.com/x/react-data-grid/components/#footer
+     */
     const pollingInterval = setInterval(() => {
       fetchRows();
     }, POLLING_INTERVAL);
@@ -140,6 +143,7 @@ export default function WorkspaceTable() {
       saveRow={createWorkspace}
       updateRow={updateWorkspace}
       deleteRow={deleteWorkspace}
+      fetchRows={fetchRows}
     />
   );
 }

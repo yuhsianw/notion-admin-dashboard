@@ -41,6 +41,7 @@ interface TableProps {
     row: GridRowModel,
   ) => Promise<GetUserDto | GetWorkspaceDto | null>;
   deleteRow: (id: string) => void;
+  fetchRows: () => void;
 }
 
 export default function Table({
@@ -51,8 +52,10 @@ export default function Table({
   saveRow,
   updateRow,
   deleteRow,
+  fetchRows,
 }: TableProps) {
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
+  const [loading, setLoading] = useState(false);
 
   const handleRowEditStop: GridEventListener<'rowEditStop'> = (
     params,
@@ -73,7 +76,6 @@ export default function Table({
 
   const handleDeleteClick = (id: GridRowId) => async () => {
     try {
-      // QUESTION: Should we use `id.toString()` or change id type to `string`?
       await deleteRow(id.toString());
       setRows(rows.filter((row) => row.id !== id));
     } catch (error) {
@@ -203,6 +205,7 @@ export default function Table({
         slots={{
           toolbar: TableToolbar,
         }}
+        // TODO: Create UserTableContext for these props.
         slotProps={{
           toolbar: {
             defaultRows,
@@ -212,8 +215,12 @@ export default function Table({
             saveRow,
             setRowModesModel,
             columns,
+            loading,
+            setLoading,
+            fetchRows,
           },
         }}
+        loading={loading}
         initialState={{
           pagination: { paginationModel: { pageSize: 10 } },
         }}

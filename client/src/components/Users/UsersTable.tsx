@@ -147,6 +147,7 @@ export default function UserTable() {
       saveRow={createUser}
       updateRow={updateUser}
       deleteRow={deleteUser}
+      fetchRows={fetchRows}
     />
   );
 }

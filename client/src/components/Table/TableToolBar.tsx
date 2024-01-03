@@ -22,6 +22,7 @@ import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import React from 'react';
 import CreateWorkspaceDto from '../../dto/create-workspace.dto';
 import { WorkspaceGridRow } from '../Workspaces/WorkspacesTable';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 interface TableToolbarProps {
   rows: GridRowsProp;
@@ -33,6 +34,9 @@ interface TableToolbarProps {
     newModel: (oldModel: GridRowModesModel) => GridRowModesModel,
   ) => void;
   columns: GridColDef[];
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
+  fetchRows: () => void;
 }
 
 export default function TableToolbar({
@@ -43,6 +47,9 @@ export default function TableToolbar({
   saveRow,
   setRowModesModel,
   columns,
+  loading,
+  setLoading,
+  fetchRows,
 }: TableToolbarProps) {
   const handleAddClick = () => {
     /**
@@ -72,20 +79,25 @@ export default function TableToolbar({
     });
   };
 
-  /**
-   * Resets table to default rows.
-   * TODO: This should be done by sending a single request to the server.
-   * TODO: Add confirm modal and progress circle.
-   */
-  const handleResetClick = async () => {
+  const resetRows = async () => {
     for (const row of rows) {
       await deleteRow(row.id);
     }
     setRows(() => []);
     setRowModesModel(() => ({}));
-    for (const row of defaultRows) {
-      await saveRow(row);
-    }
+    return Promise.all(defaultRows.map((row) => saveRow(row)));
+  };
+
+  /**
+   * Resets table to default rows.
+   * TODO: This should be done by sending a single request to the server.
+   * TODO: Add confirm modal
+   */
+  const handleResetClick = async () => {
+    setLoading(true);
+    await resetRows();
+    fetchRows();
+    setLoading(false);
   };
 
   return (
@@ -93,12 +105,22 @@ export default function TableToolbar({
       <Button color="primary" startIcon={<AddIcon />} onClick={handleAddClick}>
         Add
       </Button>
-      <Button
-        color="primary"
-        startIcon={<RestartAltIcon />}
-        onClick={handleResetClick}>
-        Reset
-      </Button>
+      {loading ? (
+        <LoadingButton
+          loading
+          loadingPosition="start"
+          color="primary"
+          startIcon={<RestartAltIcon />}>
+          Reset
+        </LoadingButton>
+      ) : (
+        <Button
+          color="primary"
+          startIcon={<RestartAltIcon />}
+          onClick={handleResetClick}>
+          Reset
+        </Button>
+      )}
     </GridToolbarContainer>
   );
 }
