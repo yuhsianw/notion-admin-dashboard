@@ -17,6 +17,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import GroupIcon from '@mui/icons-material/Group';
 import WorkspacesIcon from '@mui/icons-material/Workspaces';
+import InfoIcon from '@mui/icons-material/Info';
 import React from 'react';
 import DrawerHeader from './DrawerHeader';
 import { DRAWER_WIDTH } from '../../config';
@@ -59,6 +60,14 @@ export default function SideNav({ open, setOpen }: SideNavProps) {
       <Divider />
 
       <List>
+        <ListItem key={'about'} disablePadding>
+          <ListItemButton component={Link} to={'/'}>
+            <ListItemIcon>
+              <InfoIcon />
+            </ListItemIcon>
+            <ListItemText primary={'About'} />
+          </ListItemButton>
+        </ListItem>
         <ListItem key={'workspaces'} disablePadding>
           <ListItemButton component={Link} to={'/workspaces'}>
             <ListItemIcon>
