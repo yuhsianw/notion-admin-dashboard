@@ -6,7 +6,7 @@
 
 Notion Admin Dashboard is an application for workspace and user management. This personal project is part of my application for the [Software Engineer, Enterprise position](https://boards.greenhouse.io/notion/jobs/4889070003) at Notion. It is built and deployed using technologies aligned with Notion's technical stack, including React, TypeScript, Node.js, Postgres, and Heroku. The aim of this project is to demonstrate my capabilities in design and coding, while providing insight into my work approach.
 
-- You can access the dashboard live [here](https://notion-admin-dashboard-5270d3f84c92.herokuapp.com/workspaces) or run it locally following the steps below.
+- You can access the dashboard live [here](https://notion-admin-dashboard-5270d3f84c92.herokuapp.com/) or run it locally following the steps below.
 - See this [Notion page](https://yuhsianw.notion.site/Frank-with-Notion-bc8a3fc195da4b308260be484f0c0076?pvs=4) to learn more about me and my passion for Notion.
 
 ## Features
@@ -22,8 +22,8 @@ Notion Admin Dashboard is an application for workspace and user management. This
   - Assign to or remove from workspaces.
 
 - **Others**:
-  - Switch between light/Dark mode for the dashboard.
-  - Tables include pagination, sorting, filter, and reset to default rows.
+  - Switch between dark/light mode for the dashboard.
+  - Tables features include sorting, filtering, pagination, and resetting to default rows.
 
 ## Technical Stack
 
@@ -34,7 +34,7 @@ Notion Admin Dashboard is an application for workspace and user management. This
 
 - **Back End**
   - [NestJS](https://nestjs.com/) - Robust, scalable, and TypeScript-based backend framework.
-  - [PostgreSQL](https://www.postgresql.org/) - DBMS ([of year 2023](https://db-engines.com/en/blog_post/106#:~:text=PostgreSQL%20is%20the%20database%20management,DBMS%20of%20the%20Year%202023.)) to store structured data and manage database. .
+  - [PostgreSQL](https://www.postgresql.org/) - DBMS ([of year 2023](https://db-engines.com/en/blog_post/106#:~:text=PostgreSQL%20is%20the%20database%20management,DBMS%20of%20the%20Year%202023.)) to store structured data and manage database.
 
 ## Running Locally
 
