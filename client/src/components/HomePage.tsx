@@ -32,7 +32,7 @@ export default function HomePage() {
         <Link
           target="_blank"
           rel="noreferrer"
-          href="https://yuhsianw.notion.site/Frank-with-Notion-bc8a3fc195da4b308260be484f0c0076?pvs=4">
+          href="https://yuhsianw.notion.site/Frank-with-Notion-bc8a3fc195da4b308260be484f0c0076">
           Notion page
         </Link>
         .
