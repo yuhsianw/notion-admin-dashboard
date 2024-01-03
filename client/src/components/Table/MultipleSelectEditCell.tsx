@@ -4,7 +4,7 @@ import React from 'react';
 import {
   EDIT_CELL_ITEM_HEIGHT,
   EDIT_CELL_ITEM_PADDING_TOP,
-} from '../../config/constants';
+} from '../../config';
 
 export interface MultipleSelectEditCellOption {
   value: string;
@@ -25,8 +25,6 @@ export default function MultipleSelectEditCell({
   options,
   api,
 }: GridRenderEditCellParams & { options: MultipleSelectEditCellOption[] }) {
-  console.log('value', value);
-
   const handleChange = (event: SelectChangeEvent<string[]>) => {
     api.setEditCellValue({
       id,
@@ -52,7 +50,9 @@ export default function MultipleSelectEditCell({
         },
       }}
       renderValue={(selectedValues) => {
-        // TODO: Improve UX, e.g. use tag and dynamical row height in edit mode.
+        // TODO: Allow render format to be passed in with the `children` prop:
+        // TODO: - Use tags with remove button and dynamical row height in edit mode for workspaces.
+        // TODO: - Use stacked avatar for members with highlight + tooltip on hover.
         // return (
         //   <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
         //     {selected.map((value) => (

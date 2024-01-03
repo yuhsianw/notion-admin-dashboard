@@ -7,7 +7,7 @@
  * @see: https://mui.com/material-ui/react-drawer/#persistent-drawer
  */
 import { AppBar, AppBarProps, styled } from '@mui/material';
-import { DRAWER_WIDTH } from '../config/constants';
+import { DRAWER_WIDTH } from '../config';
 
 export const DrawerHeaderStyledComponent = styled('div')(({ theme }) => ({
   display: 'flex',

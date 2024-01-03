@@ -1,12 +1,20 @@
 import { randomId } from '@mui/x-data-grid-generator';
-import { UserGridRow } from '../components/Users/UsersTable';
-import { WorkspaceGridRow } from '../components/Workspaces/WorkspacesTable';
+import { UserGridRow } from './components/Users/UsersTable';
+import { WorkspaceGridRow } from './components/Workspaces/WorkspacesTable';
 
+const isProduction = process.env.NODE_ENV === 'production';
 
 /**
  * API
-*/
-export const BASE_URL = 'http://localhost:3000/api';
+ */
+export const DEV_HOSTNAME = 'localhost';
+export const DEV_PORT = 3000;
+export const PROD_HOSTNAME = window.location.hostname;
+export const BASE_URL = isProduction
+  ? `${window.location.origin}/api`
+  : `http://${DEV_HOSTNAME}:${DEV_PORT}/api`;
+export const USER_API_URL = `${BASE_URL}/workspaces/`;
+export const WORKSPACE_API_URL = `${BASE_URL}/users/`;
 export const POLLING_INTERVAL = 1000 * 5;
 
 /**

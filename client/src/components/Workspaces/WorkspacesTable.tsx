@@ -1,10 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { GridColDef, GridRowsProp } from '@mui/x-data-grid';
 import Table from '../Table/Table';
-import {
-  DEFAULT_WORKSPACE_ROWS,
-  POLLING_INTERVAL,
-} from '../../config/constants';
+import { DEFAULT_WORKSPACE_ROWS, POLLING_INTERVAL } from '../../config';
 import {
   createWorkspace,
   deleteWorkspace,
@@ -84,12 +81,11 @@ export default function WorkspaceTable() {
 
   useEffect(() => {
     userService.getAllUsers().then((data) => {
-      setUserOptions(
-        data.map((user) => ({
-          value: user.id,
-          label: `${user.firstName} ${user.lastName}`,
-        })),
-      );
+      const options = data.map((user) => ({
+        value: user.id,
+        label: `${user.firstName} ${user.lastName}`,
+      }));
+      setUserOptions(options);
     });
   }, []);
 

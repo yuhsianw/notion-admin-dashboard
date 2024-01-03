@@ -19,7 +19,7 @@ import GroupIcon from '@mui/icons-material/Group';
 import WorkspacesIcon from '@mui/icons-material/Workspaces';
 import React from 'react';
 import DrawerHeader from './DrawerHeader';
-import { DRAWER_WIDTH } from '../../config/constants';
+import { DRAWER_WIDTH } from '../../config';
 
 interface SideNavProps {
   open: boolean;

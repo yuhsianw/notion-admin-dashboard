@@ -7,7 +7,7 @@ import {
   updateUser,
 } from '../../services/userService';
 import Table from '../Table/Table';
-import { DEFAULT_USER_ROWS, POLLING_INTERVAL } from '../../config/constants';
+import { DEFAULT_USER_ROWS, POLLING_INTERVAL } from '../../config';
 import { renderEmail } from '@mui/x-data-grid-generator';
 import MultipleSelectEditCell, {
   MultipleSelectEditCellOption,

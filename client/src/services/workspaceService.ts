@@ -2,19 +2,17 @@ import axios from 'axios';
 import GetWorkspaceDto from '../dto/get-workspace.dto';
 import CreateWorkspaceDto from '../dto/create-workspace.dto';
 import UpdateWorkspaceDto from '../dto/update-workspace.dto';
-import { BASE_URL } from '../config/constants';
-
-const API_URL = `${BASE_URL}/workspaces/`;
+import { USER_API_URL } from '../config';
 
 export const getAllWorkspaces = async (): Promise<GetWorkspaceDto[]> => {
-  const response = await axios.get(API_URL);
+  const response = await axios.get(USER_API_URL);
   return response.data;
 };
 
 export const getWorkspaceById = async (
   id: string,
 ): Promise<GetWorkspaceDto> => {
-  const response = await axios.get(`${API_URL}${id}`);
+  const response = await axios.get(`${USER_API_URL}${id}`);
   return response.data;
 };
 
@@ -26,19 +24,19 @@ export const createWorkspace = async (
     domain: data.domain,
     samlEnabled: data.samlEnabled,
   };
-  return axios.post(API_URL, workspace);
+  return axios.post(USER_API_URL, workspace);
 };
 
 export const updateWorkspace = async (
   id: string,
   workspace: UpdateWorkspaceDto,
 ): Promise<GetWorkspaceDto> => {
-  const response = await axios.patch(`${API_URL}${id}`, workspace);
+  const response = await axios.patch(`${USER_API_URL}${id}`, workspace);
   return response.data;
 };
 
 export const deleteWorkspace = async (id: string): Promise<null> => {
-  return axios.delete(`${API_URL}${id}`);
+  return axios.delete(`${USER_API_URL}${id}`);
 };
 
 const workspaceService = {

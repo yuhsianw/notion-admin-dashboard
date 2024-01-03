@@ -1,18 +1,16 @@
 import axios from 'axios';
-import { BASE_URL } from '../config/constants';
+import { WORKSPACE_API_URL } from '../config';
 import { GetUserDto } from '../dto/get-user.dto';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 
-const API_URL = `${BASE_URL}/users/`;
-
 export const getAllUsers = async (): Promise<GetUserDto[]> => {
-  const response = await axios.get(API_URL);
+  const response = await axios.get(WORKSPACE_API_URL);
   return response.data;
 };
 
 export const getUserById = async (id: string): Promise<GetUserDto> => {
-  const response = await axios.get(`${API_URL}${id}`);
+  const response = await axios.get(`${WORKSPACE_API_URL}${id}`);
   return response.data;
 };
 
@@ -22,19 +20,19 @@ export const createUser = async (data: any): Promise<GetUserDto | null> => {
     lastName: data.lastName,
     email: data.email,
   };
-  return axios.post(API_URL, user);
+  return axios.post(WORKSPACE_API_URL, user);
 };
 
 export const updateUser = async (
   id: string,
   user: UpdateUserDto,
 ): Promise<GetUserDto> => {
-  const response = await axios.patch(`${API_URL}${id}`, user);
+  const response = await axios.patch(`${WORKSPACE_API_URL}${id}`, user);
   return response.data;
 };
 
 export const deleteUser = async (id: string): Promise<null> => {
-  return axios.delete(`${API_URL}${id}`);
+  return axios.delete(`${WORKSPACE_API_URL}${id}`);
 };
 
 const userService = {
