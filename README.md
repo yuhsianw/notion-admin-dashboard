@@ -4,10 +4,9 @@
 
 ## Description
 
-Notion Admin Dashboard is an application for workspace and user management. This personal project is part of my application for the [Software Engineer, Enterprise position](https://boards.greenhouse.io/notion/jobs/4889070003) at Notion. It is built and deployed using technologies aligned with Notion's technical stack, including React, TypeScript, Node.js, Postgres, and Heroku. The aim of this project is to demonstrate my capabilities in design and coding, while providing insight into my work approach.
+Notion Admin Dashboard is a demo application for workspace and user management. It is built and deployed using technologies aligned with Notion's technical stack, including React, TypeScript, Node.js, Postgres, and Heroku. The aim of this personal project is to demonstrate my capabilities in design and coding, while providing insight into my work approach.
 
-- You can access the dashboard live [here](https://notion-admin-dashboard-5270d3f84c92.herokuapp.com/) or run it locally following the steps below.
-- See this [Notion page](https://yuhsianw.notion.site/Frank-with-Notion-bc8a3fc195da4b308260be484f0c0076) to learn more about me and my passion for Notion.
+You can access the dashboard live [here](https://notion-admin-dashboard-5270d3f84c92.herokuapp.com/) or run it locally following the steps below.
 
 ## Features
 
